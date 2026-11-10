@@ -1,0 +1,68 @@
+<!doctype html><meta charset="utf-8"><title>motion-assets harness</title>
+<link rel="stylesheet" href="../assets/core/fonts.css">
+<body style="margin:0;background:#fff"><canvas id="c" width="1280" height="720"></canvas>
+<script type="module">
+// harness: ?asset=<id>&t=<seconds>&p=<json params>   (optional &s=<scale> for parts, &bg=0)
+// exposes window.drawAsset(id,t,params,opts), window.REG, window.markers(id,params), window.catalog(...)
+import { W, H, PAPER, INK, MONO, CREAM } from '../assets/core/palette.js';
+import { fontsReady, grainOver, resetG } from '../assets/core/core.js';
+const C = document.getElementById('c'), G = C.getContext('2d', { willReadFrequently: true });
+const REG = {}, MODS = {}, dups = [], loadErrors = [];
+Object.assign(window, { REG, MODS, dups, loadErrors, ready: false, textLog: [], logText: false });
+// text instrumentation (for the "text inside bounds" check)
+for (const fn of ['fillText', 'strokeText']) {
+  const orig = CanvasRenderingContext2D.prototype[fn];
+  CanvasRenderingContext2D.prototype[fn] = function (s, x, y, mw) {
+    if (window.logText && this.globalAlpha > .05) {
+      const m = /(\d+(?:\.\d+)?)px/.exec(this.font), size = m ? +m[1] : 0, w = this.measureText(String(s)).width, tf = this.getTransform();
+      window.textLog.push({ s: String(s), x, y, size, w, align: this.textAlign, a: tf.a, b: tf.b, c: tf.c, d: tf.d, e: tf.e, f: tf.f, alpha: this.globalAlpha });
+    }
+    return orig.call(this, s, x, y, mw);
+  };
+}
+function drawAsset(id, t, params = {}, opts = {}) {
+  const a = REG[id]; if (!a) throw new Error('unknown asset ' + id);
+  const g = opts.g || G; resetG(g);
+  if (a.meta.kind === 'scene') { a.draw(g, t, params); return }
+  if (opts.bg !== false) { g.fillStyle = PAPER; g.fillRect(0, 0, W, H) }
+  g.save(); g.translate(opts.x ?? 640, opts.y ?? 360); const s = opts.s ?? 1; g.scale(s, s); a.draw(g, t, params); g.restore();
+  if (opts.bg !== false && opts.grain !== false) grainOver(g, .5);
+}
+window.drawAsset = drawAsset;
+window.markers = (id, params = {}) => REG[id].markers(params);
+window.metas = () => Object.fromEntries(Object.entries(REG).map(([id, a]) => [id, { ...a.meta, module: MODS[id] }]));
+window.pixels = (id, t, params, opts) => { resetG(G); G.clearRect(0, 0, W, H); drawAsset(id, t, params, opts); return G.getImageData(0, 0, W, H).data };
+window.runDemo = async (name, t) => { const m = await import('../demos/tech/' + name + '.js?v=' + Date.now()); resetG(G); m.demo(G, t) };
+window.png = () => C.toDataURL('image/png');
+window.timeDraw = (id, t, params = {}, n = 12) => {
+  const a = REG[id], out = []; resetG(G);
+  for (let i = 0; i < n; i++) { resetG(G); G.save(); if (a.meta.kind !== 'scene') G.translate(640, 360); const t0 = performance.now(); a.draw(G, t + i * .13, params); G.getImageData(0, 0, 1, 1); out.push(performance.now() - t0); G.restore() }
+  out.sort((x, y) => x - y); return { median: out[n >> 1], max: out[n - 1] };
+};
+// labelled grid of many assets -> data URL
+window.catalog = (ids, o = {}) => {
+  const cols = o.cols || 8, cw = o.cw || 190, ch = o.ch || 200, t = o.t ?? 3, s = o.s ?? .85, rows = Math.ceil(ids.length / cols), head = 56;
+  const cv = document.createElement('canvas'); cv.width = cols * cw; cv.height = rows * ch + head; const g = cv.getContext('2d');
+  g.fillStyle = PAPER; g.fillRect(0, 0, cv.width, cv.height);
+  g.fillStyle = INK; g.font = `700 22px ${MONO}`; g.fillText(o.title || '', 20, 36);
+  ids.forEach((id, i) => {
+    const x = (i % cols) * cw, y = head + Math.floor(i / cols) * ch; g.save(); g.beginPath(); g.rect(x + 4, y + 4, cw - 8, ch - 8); g.clip();
+    g.fillStyle = CREAM; g.fillRect(x + 4, y + 4, cw - 8, ch - 8);
+    const bd = REG[id].meta.bounds, sc = Math.min(s, (cw - 24) / bd[2], (ch - 54) / bd[3]); g.save(); g.translate(x + cw / 2 - (bd[0] + bd[2] / 2) * sc, y + ch / 2 - 12 - (bd[1] + bd[3] / 2) * sc); g.scale(sc, sc);
+    try { const tt = typeof t === 'function' ? t(id) : (o.tmap && o.tmap[id]) ?? t; REG[id].draw(g, tt, o.params?.[id] || {}) } catch (e) { g.fillStyle = 'red'; g.fillText('ERR', 0, 0) }
+    g.restore(); g.fillStyle = INK; g.font = `700 13px ${MONO}`; g.textAlign = 'center'; g.fillText(id, x + cw / 2, y + ch - 12); g.restore();
+  });
+  return cv.toDataURL('image/png');
+};
+(async () => {
+  await fontsReady();
+  const man = await (await fetch('../assets/manifest.json?' + Date.now())).json();
+  for (const m of man.modules) {
+    try { const mod = await import('../assets/' + m + '?v=' + Date.now()); for (const id in mod.assets) { if (REG[id]) dups.push(id); else { REG[id] = mod.assets[id]; MODS[id] = m } } }
+    catch (e) { loadErrors.push(m + ': ' + e.message) }
+  }
+  const q = new URLSearchParams(location.search);
+  if (q.get('asset')) drawAsset(q.get('asset'), +(q.get('t') || 0), JSON.parse(q.get('p') || '{}'), { s: +(q.get('s') || 1), bg: q.get('bg') !== '0' });
+  window.ready = true;
+})();
+</script>

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vbeat-backend"
+version = "0.1.0"
+description = "vbeat backend: stateless, interchangeable workers that claim jobs from Supabase and run beats through vbeat-agent."
+requires-python = ">=3.11"
+# The worker's status app uses the standard library (http.server). The only third-party dependency is psycopg 3 (+ its pool).
+dependencies = ["vbeat-shared", "vbeat-agent", "psycopg[binary,pool]>=3.1"]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.scripts]
+vbeat-backend = "vbeat_backend.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests", "../agent/tests", "../shared/src", "../agent/src", "../engine/src", "../audio/src", "../pipeline/src"]
+markers = [
+    "render: starts Chromium and/or renders video with ffmpeg (deselect with -m \"not render\")",
+]

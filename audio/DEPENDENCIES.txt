@@ -1,0 +1,8 @@
+# One line per package with the minimum version, for merging into a larger project.
+# Python >= 3.11 (developed and tested on 3.12)
+numpy>=1.26
+scipy>=1.11
+Pillow>=10.1
+pytest>=7.0
+# system binaries on PATH (not pip packages): ffmpeg >= 4.4 and ffprobe >= 4.4 (tested with 6.1; needs libx264 only for the tests' lavfi video)
+ffmpeg>=4.4

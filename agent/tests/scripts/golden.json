@@ -1,0 +1,174 @@
+{
+ "supports_images": true,
+ "turns": [
+  {
+   "text": "I will read the beat first.",
+   "tool_calls": [
+    {
+     "name": "get_beat_info",
+     "arguments": {}
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Looking for a big-number asset.",
+   "tool_calls": [
+    {
+     "name": "search_assets",
+     "arguments": {
+      "query": "big number stat"
+     }
+    },
+    {
+     "name": "get_asset",
+     "arguments": {
+      "id": "tech/big-stat"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "First version: the big stat plus a source line.",
+   "tool_calls": [
+    {
+     "name": "write_scene",
+     "arguments": {
+      "source": {
+       "$file": "golden_scene_v1.js"
+      },
+      "note": "big-stat + source line"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Fast check passed; layout needs the full check.",
+   "tool_calls": [
+    {
+     "name": "check_scene",
+     "arguments": {
+      "level": "full"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "The source line runs off the right edge; moving it inside the margin.",
+   "tool_calls": [
+    {
+     "name": "write_scene",
+     "arguments": {
+      "source": {
+       "$file": "golden_scene_v2.js"
+      },
+      "note": "fix C4"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Let me look at it.",
+   "tool_calls": [
+    {
+     "name": "preview",
+     "arguments": {}
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Markers for the sound design.",
+   "tool_calls": [
+    {
+     "name": "get_markers",
+     "arguments": {}
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Ticks into a thunk on the landing.",
+   "tool_calls": [
+    {
+     "name": "write_cue",
+     "arguments": {
+      "source": {
+       "$file": "golden_cue.py"
+      },
+      "note": "ticks + thunk"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Full check before finishing.",
+   "tool_calls": [
+    {
+     "name": "check_scene",
+     "arguments": {
+      "level": "full"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Done.",
+   "tool_calls": [
+    {
+     "name": "finish",
+     "arguments": {
+      "summary": "Big-stat count-up on 'forty seven percent' with a source line; ticks then a thunk on the landing."
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  }
+ ]
+}

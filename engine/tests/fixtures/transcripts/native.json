@@ -1,0 +1,12 @@
+{"words": [
+ {"text": "The", "start_ms": 10000, "end_ms": 10180},
+ {"text": "quick", "start_ms": 10180, "end_ms": 10500},
+ {"text": "brown", "start_ms": 10500, "end_ms": 10900},
+ {"text": "fox.", "start_ms": 10900, "end_ms": 11300},
+ {"text": "It", "start_ms": 12000, "end_ms": 12150},
+ {"text": "jumped", "start_ms": 12150, "end_ms": 12600},
+ {"text": "over", "start_ms": 12600, "end_ms": 12850},
+ {"text": "\"the", "start_ms": 12850, "end_ms": 13000},
+ {"text": "lazy", "start_ms": 13000, "end_ms": 13300},
+ {"text": "dog.\"", "start_ms": 13300, "end_ms": 13800}
+]}

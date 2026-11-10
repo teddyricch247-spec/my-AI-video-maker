@@ -1,0 +1,11 @@
+{"text": " Hello there world. How are you?",
+ "segments": [
+  {"id": 0, "start": 0.0, "end": 2.0, "text": " Hello there world.",
+   "words": [{"word": " Hello", "start": 0.0, "end": 0.5, "probability": 0.9},
+             {"word": " there", "start": 0.5, "end": 1.0},
+             {"word": " world.", "start": 1.2, "end": 2.0}]},
+  {"id": 1, "start": 2.5, "end": 4.0, "text": " How are you?",
+   "words": [{"word": " How", "start": 2.5, "end": 2.9},
+             {"word": " are", "start": 2.9, "end": 3.2},
+             {"word": " you?", "start": 3.2, "end": 4.0}]}
+ ]}

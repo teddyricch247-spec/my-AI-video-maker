@@ -1,0 +1,7 @@
+# Render machine + development. The web server needs NONE of these (shared/ is standard library only).
+playwright>=1.40      # then: python -m playwright install chromium   (see engine/scripts/setup_sprite.sh)
+numpy>=1.24
+scipy>=1.10
+pillow>=10
+pytest>=7
+# system packages: ffmpeg and ffprobe on PATH (apt install ffmpeg)

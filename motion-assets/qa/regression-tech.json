@@ -1,0 +1,25 @@
+[
+ {
+  "id": "tech/metro-map",
+  "v2scene": "metro",
+  "times": [
+   0.4,
+   1.2,
+   2.0,
+   2.8,
+   3.8,
+   5.0
+  ]
+ },
+ {
+  "id": "tech/isotype-crowd",
+  "v2scene": "crowd",
+  "times": [
+   0.3,
+   1.0,
+   1.8,
+   2.3,
+   3.5
+  ]
+ }
+]

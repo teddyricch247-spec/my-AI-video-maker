@@ -1,0 +1,8 @@
+{
+  "service_name": "vbeat-worker",
+  "cmd": "bash",
+  "args": ["/home/sprite/vbeat/backend/deploy/run-worker.sh"],
+  "needs": [],
+  "http_port": 8080,
+  "duration": "10s"
+}

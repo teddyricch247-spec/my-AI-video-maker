@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>vbeat</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header id="topbar" hidden>
+  <div class="tb-row">
+    <a id="tb-back" class="icon-btn" href="#/projects" aria-label="Back">&larr;</a>
+    <h1 id="tb-title">vbeat</h1>
+    <a id="tb-settings" class="icon-btn" href="#/settings" aria-label="Settings">&#9881;</a>
+  </div>
+  <nav id="tb-tabs" class="tabs" aria-label="Project sections" hidden></nav>
+</header>
+<div id="banners"></div>
+<main id="view" tabindex="-1"></main>
+<div id="toasts" aria-live="polite"></div>
+<noscript><p style="padding:16px">vbeat needs JavaScript.</p></noscript>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

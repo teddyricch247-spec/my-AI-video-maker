@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vbeat-agent"
+version = "0.1.0"
+description = "Agent runner: an LLM (through OpenRouter) writes scene.js and cue.py for one beat, reads the deterministic tools' reports and iterates until the beat passes (render machine only)."
+requires-python = ">=3.11"
+# No third-party HTTP client: the OpenRouter client uses the standard library (see docs/DECISIONS.md D2).
+# Pillow is optional: it is used only to downscale preview images for models that can see them.
+dependencies = ["vbeat-shared"]
+
+[project.optional-dependencies]
+images = ["pillow"]
+test = ["pytest", "pillow"]
+
+[project.scripts]
+vbeat-agent = "vbeat_agent.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests", "../shared/src", "../engine/src", "../audio/src", "../pipeline/src"]
+markers = [
+    "render: starts Chromium and/or renders video with ffmpeg (deselect with -m \"not render\")",
+]

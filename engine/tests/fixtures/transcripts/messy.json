@@ -1,0 +1,15 @@
+{"words": [
+ {"text": "  Hello  ", "start_ms": 0, "end_ms": 600},
+ {"text": "", "start_ms": 600, "end_ms": 650},
+ {"text": ",", "start_ms": 600, "end_ms": 620},
+ {"text": "overlapping", "start_ms": 500, "end_ms": 1200},
+ {"text": "backwards", "start_ms": 1900, "end_ms": 1500},
+ {"text": "negative", "start_ms": -200, "end_ms": 100},
+ {"text": "tiny", "start_ms": 2000, "end_ms": 2000},
+ {"text": "tiny2", "start_ms": 2000, "end_ms": 2001},
+ {"text": "tiny3", "start_ms": 2001, "end_ms": 2002},
+ {"text": "\u201c", "start_ms": 2002, "end_ms": 2003},
+ {"text": "quoted", "start_ms": 2100, "end_ms": 2500},
+ {"text": "end.)", "start_ms": 2500, "end_ms": 3000},
+ {"text": "wow\u2026", "start_ms": 3600, "end_ms": 4000}
+]}

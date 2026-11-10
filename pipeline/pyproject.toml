@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vbeat-pipeline"
+version = "0.1.0"
+description = "Render-machine orchestration: transcript + scene + cue script -> verified MP4 with sound effects. Calls the vbeat_sprite and vbeat_audio command lines."
+requires-python = ">=3.11"
+dependencies = ["vbeat-shared"]   # vbeat-sprite and vbeat-audio are run as commands (python -m ...) and must be installed on the render machine
+
+[tool.setuptools.packages.find]
+where = ["src"]

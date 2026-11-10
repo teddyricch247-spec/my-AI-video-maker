@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vbeat-shared"
+version = "0.1.0"
+description = "vbeat shared contracts: time model, transcript ingest, JSON envelopes, asset manifest/index rules, preview bundle. Python standard library only."
+requires-python = ">=3.11"
+dependencies = []          # MUST stay empty: this package runs on the 512 MB / 0.1 CPU web server (see integration/test_boundaries.py)
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]

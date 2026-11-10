@@ -1,0 +1,91 @@
+{
+ "supports_images": false,
+ "turns": [
+  {
+   "text": "Writing the scene.",
+   "tool_calls": [
+    {
+     "name": "write_scene",
+     "arguments": {
+      "source": {
+       "$file": "golden_scene_v1.js"
+      }
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Cue.",
+   "tool_calls": [
+    {
+     "name": "write_cue",
+     "arguments": {
+      "source": {
+       "$file": "golden_cue.py"
+      }
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Finishing.",
+   "tool_calls": [
+    {
+     "name": "finish",
+     "arguments": {
+      "summary": "first try"
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "The pipeline's check found a layout error; fixing it.",
+   "tool_calls": [
+    {
+     "name": "write_scene",
+     "arguments": {
+      "source": {
+       "$file": "golden_scene_v2.js"
+      }
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  },
+  {
+   "text": "Finishing again.",
+   "tool_calls": [
+    {
+     "name": "finish",
+     "arguments": {
+      "summary": "Fixed the source line after the full check caught it."
+     }
+    }
+   ],
+   "usage": {
+    "prompt_tokens": 2500,
+    "completion_tokens": 400,
+    "cost": 0.001
+   }
+  }
+ ]
+}

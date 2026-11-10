@@ -1,0 +1,15 @@
+{"words": [
+ {"text": "Last", "start_ms": 300, "end_ms": 600},
+ {"text": "year", "start_ms": 600, "end_ms": 950},
+ {"text": "our", "start_ms": 1000, "end_ms": 1200},
+ {"text": "revenue", "start_ms": 1200, "end_ms": 1700},
+ {"text": "grew", "start_ms": 1700, "end_ms": 2000},
+ {"text": "by", "start_ms": 2000, "end_ms": 2150},
+ {"text": "forty", "start_ms": 2150, "end_ms": 2650},
+ {"text": "seven", "start_ms": 2650, "end_ms": 3050},
+ {"text": "percent.", "start_ms": 3050, "end_ms": 3700},
+ {"text": "Customers", "start_ms": 4400, "end_ms": 5000},
+ {"text": "noticed", "start_ms": 5000, "end_ms": 5500},
+ {"text": "the", "start_ms": 5500, "end_ms": 5650},
+ {"text": "difference.", "start_ms": 5650, "end_ms": 6400}
+]}

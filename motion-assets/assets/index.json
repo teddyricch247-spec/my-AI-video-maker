@@ -1,0 +1,5777 @@
+{
+ "version": 1,
+ "count": 91,
+ "modules": [
+  "fx/fx.js",
+  "objects/objects-1.js",
+  "objects/objects-2.js",
+  "technical/scenes-a.js",
+  "technical/scenes-b.js",
+  "technical/scenes-p1.js",
+  "technical/seeds.js"
+ ],
+ "assets": [
+  {
+   "id": "fx/bracket",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Curly bracket",
+   "description": "Hand-drawn curly brace that grows to span a group of items (dir h = horizontal, v = vertical), with an optional label. Use to group or total things.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "len": {
+     "type": "number",
+     "default": 220,
+     "desc": "length px"
+    },
+    "dir": {
+     "type": "string",
+     "default": "v",
+     "desc": "'v' vertical (opens left) or 'h' horizontal (opens up)"
+    },
+    "label": {
+     "type": "string",
+     "default": "",
+     "desc": "optional mono label"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "bracket",
+    "group",
+    "annotation"
+   ],
+   "bounds": [
+    -160,
+    -130,
+    200,
+    260
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/bracket'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/circle-highlight",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Circle highlight",
+   "description": "Hand-drawn loop that circles a spot, overshooting slightly like a pen. Use to ring a number, button or word; w/h = size of the ring.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 280,
+     "desc": "ring width"
+    },
+    "h": {
+     "type": "number",
+     "default": 120,
+     "desc": "ring height"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "circle",
+    "highlight",
+    "annotation"
+   ],
+   "bounds": [
+    -170,
+    -80,
+    340,
+    160
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/circle-highlight'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/confetti",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Confetti burst",
+   "description": "Burst of paper confetti shot upward from the origin that flutters and falls under closed-form gravity. One-shot: use for celebrations and success moments.",
+   "duration": 3.5,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "count": {
+     "type": "number",
+     "default": 70,
+     "desc": "pieces (4-120)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "confetti",
+    "celebration",
+    "success"
+   ],
+   "bounds": [
+    -420,
+    -520,
+    840,
+    900
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "oneShot": true,
+   "previewT": 0.55,
+   "example": "g.save(); g.translate(640, 360); assets['fx/confetti'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/dust-puff",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Dust puff",
+   "description": "Cluster of cream dust clouds that billow outward and fade, for landings and impacts. One-shot; place at the contact point.",
+   "duration": 1.4,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#FBF3E2",
+     "desc": "main colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "thud"
+   ],
+   "tags": [
+    "fx",
+    "dust",
+    "impact",
+    "landing"
+   ],
+   "bounds": [
+    -130,
+    -90,
+    260,
+    100
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "oneShot": true,
+   "previewT": 0.35,
+   "example": "g.save(); g.translate(640, 360); assets['fx/dust-puff'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/hand-arrow",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Hand-drawn arrow",
+   "description": "Wobbly marker arrow that draws itself from tail to head, then breathes. Use to point at something on screen; flip mirrors it, w/h set the span.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 240,
+     "desc": "horizontal span px"
+    },
+    "h": {
+     "type": "number",
+     "default": 120,
+     "desc": "vertical span px"
+    },
+    "flip": {
+     "type": "boolean",
+     "default": false,
+     "desc": "mirror horizontally"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "arrow starts drawing"
+    }
+   },
+   "markers": [
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "arrow",
+    "pointer",
+    "annotation"
+   ],
+   "bounds": [
+    -160,
+    -90,
+    320,
+    180
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/hand-arrow'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/highlight-swipe",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Highlighter swipe",
+   "description": "Mustard highlighter pass that wipes across a phrase (multiply blend, slightly tilted). Use behind text for emphasis; w/h match the text box, centred on origin.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 360,
+     "desc": "width px"
+    },
+    "h": {
+     "type": "number",
+     "default": 64,
+     "desc": "height px"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "slide"
+   ],
+   "tags": [
+    "fx",
+    "highlight",
+    "marker",
+    "emphasis"
+   ],
+   "bounds": [
+    -200,
+    -40,
+    400,
+    80
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/highlight-swipe'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/motion-trail",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Motion trail",
+   "description": "A paper disc that zips along x with fading ghost copies behind it, then settles and bobs. Use to show something moving from A to B; dist = travel in px.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "main colour (any palette colour)"
+    },
+    "dist": {
+     "type": "number",
+     "default": 360,
+     "desc": "travel distance px"
+    },
+    "dur": {
+     "type": "number",
+     "default": 0.7,
+     "desc": "seconds the move takes"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "trail",
+    "motion",
+    "move"
+   ],
+   "bounds": [
+    -230,
+    -50,
+    460,
+    100
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/motion-trail'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/pop-exclaim",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Popping !",
+   "description": "Starburst with a bold exclamation mark that pops in with a wobble and keeps jiggling. Use for surprise, warnings or emphasis near an item.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "main colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "fx",
+    "exclamation",
+    "surprise",
+    "alert"
+   ],
+   "bounds": [
+    -90,
+    -90,
+    180,
+    180
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/pop-exclaim'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/pop-question",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Popping ?",
+   "description": "Round paper badge with a big question mark that pops in and tilts back and forth. Use for confusion, puzzles or \"what is this?\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "main colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "fx",
+    "question",
+    "confusion",
+    "curiosity"
+   ],
+   "bounds": [
+    -80,
+    -80,
+    160,
+    160
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/pop-question'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/scribble-underline",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Scribble underline",
+   "description": "Zig-zag marker underline drawn in two passes under a word. Use to emphasise a phrase; set w to the word width.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 320,
+     "desc": "underline width px"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "underline",
+    "emphasis",
+    "annotation"
+   ],
+   "bounds": [
+    -200,
+    -20,
+    400,
+    60
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/scribble-underline'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/sparkle-pop",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Sparkle pop",
+   "description": "Three four-point sparkles that pop in and twinkle forever. Use next to a result, a clean surface or a lucky moment.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "main colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop",
+    "chime"
+   ],
+   "tags": [
+    "fx",
+    "sparkle",
+    "shine",
+    "magic"
+   ],
+   "bounds": [
+    -90,
+    -80,
+    180,
+    160
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/sparkle-pop'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/speech-bubble",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Speech bubble",
+   "description": "Rounded speech bubble sized to its text (param text) with a tail to the left or right; pops in and bobs. Use for a line of dialogue, a tip or a label.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#FBF3E2",
+     "desc": "main colour (any palette colour)"
+    },
+    "text": {
+     "type": "string",
+     "default": "Hello!",
+     "desc": "bubble text"
+    },
+    "size": {
+     "type": "number",
+     "default": 36,
+     "desc": "font px (min 14)"
+    },
+    "tail": {
+     "type": "string",
+     "default": "right",
+     "desc": "'left' or 'right'"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "fx",
+    "bubble",
+    "speech",
+    "dialogue",
+    "label"
+   ],
+   "bounds": [
+    -290,
+    -60,
+    580,
+    150
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/speech-bubble'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/speed-lines",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Speed lines",
+   "description": "Horizontal streaks that rush past in a seamless loop (closed-form). Use behind a moving object or to add urgency; w/h set the field, dir flips direction.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#221E1A",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 500,
+     "desc": "field width"
+    },
+    "h": {
+     "type": "number",
+     "default": 240,
+     "desc": "field height"
+    },
+    "lines": {
+     "type": "number",
+     "default": 9,
+     "desc": "streak count"
+    },
+    "dir": {
+     "type": "number",
+     "default": 1,
+     "desc": "1 = rushing right, -1 = left"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "whoosh"
+   ],
+   "tags": [
+    "fx",
+    "speed",
+    "motion",
+    "fast"
+   ],
+   "bounds": [
+    -260,
+    -130,
+    520,
+    260
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/speed-lines'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/stamp",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Rubber stamp",
+   "description": "Boxed rubber-stamp word that slams down large and settles slightly rotated with ink speckles. Use for verdicts: APPROVED, PAID, FAILED, SOLD.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "text": {
+     "type": "string",
+     "default": "APPROVED",
+     "desc": "stamp word (short)"
+    },
+    "size": {
+     "type": "number",
+     "default": 56,
+     "desc": "font px (min 14)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "stamp"
+   ],
+   "tags": [
+    "fx",
+    "stamp",
+    "verdict",
+    "label"
+   ],
+   "bounds": [
+    -250,
+    -60,
+    500,
+    120
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/stamp'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/sticker",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Sticker",
+   "description": "Round die-cut sticker with a cream border, a word and a peeling corner that slaps on with a small spin. Use for NEW, TIP, FREE or a rating badge.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "main colour (any palette colour)"
+    },
+    "text": {
+     "type": "string",
+     "default": "NEW",
+     "desc": "word on the sticker (max 6 chars)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "fx",
+    "sticker",
+    "badge",
+    "label"
+   ],
+   "bounds": [
+    -90,
+    -90,
+    180,
+    180
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/sticker'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/tape",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Masking tape",
+   "description": "Translucent mustard tape strip with torn ends that sticks on with a tiny bounce. Use to pin cards, photos or notes; rot sets the angle.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 150,
+     "desc": "strip length"
+    },
+    "rot": {
+     "type": "number",
+     "default": -0.3,
+     "desc": "rotation radians"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "fx",
+    "tape",
+    "attach",
+    "decor"
+   ],
+   "bounds": [
+    -90,
+    -40,
+    180,
+    80
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/tape'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/thought-bubble",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Thought bubble",
+   "description": "Cloud-shaped thought bubble with a trail of three small circles, sized to the text (param text). Use for ideas, doubts or inner questions.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#FBF3E2",
+     "desc": "main colour (any palette colour)"
+    },
+    "text": {
+     "type": "string",
+     "default": "Hmm...",
+     "desc": "bubble text"
+    },
+    "size": {
+     "type": "number",
+     "default": 34,
+     "desc": "font px (min 14)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "fx",
+    "bubble",
+    "thought",
+    "idea"
+   ],
+   "bounds": [
+    -300,
+    -90,
+    580,
+    250
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/thought-bubble'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "fx/torn-edge",
+   "kind": "fx",
+   "mode": "both",
+   "title": "Torn paper edge",
+   "description": "Wide strip of torn cream paper with a ragged top edge and shadow that slides up from below. Use as a section break, a lower-third base or to reveal a new area.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#FBF3E2",
+     "desc": "main colour (any palette colour)"
+    },
+    "w": {
+     "type": "number",
+     "default": 900,
+     "desc": "strip width"
+    },
+    "h": {
+     "type": "number",
+     "default": 140,
+     "desc": "strip height"
+    },
+    "seed": {
+     "type": "number",
+     "default": 3,
+     "desc": "tear pattern seed"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "effect starts"
+    }
+   },
+   "markers": [
+    "slide"
+   ],
+   "tags": [
+    "fx",
+    "paper",
+    "torn",
+    "transition",
+    "divider"
+   ],
+   "bounds": [
+    -460,
+    0,
+    920,
+    150
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "previewT": 3,
+   "example": "g.save(); g.translate(640, 360); assets['fx/torn-edge'].draw(g, t, {}); g.restore();",
+   "module": "fx/fx.js"
+  },
+  {
+   "id": "obj/arrow-curve",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Curved arrow",
+   "description": "Curved paper arrow that sweeps from bottom-left up and over to the right, drawn in with a dash. Use to connect two ideas or point at something.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "draw": {
+     "default": 0.2,
+     "desc": "arrow draws"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh"
+   ],
+   "tags": [
+    "arrow",
+    "curve",
+    "connect",
+    "point"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/arrow-curve'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/arrow-double",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Double arrow",
+   "description": "Two-way arrow with heads at both ends that breathes in length. Use for exchange, two-way flow, compare or sync.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "arrow",
+    "two-way",
+    "exchange",
+    "compare"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/arrow-double'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/arrow-loop",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Loop arrows",
+   "description": "Two arrows chasing each other in a circle that rotate slowly. Use for repeat, refresh, cycle, sync or iteration.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "arrow",
+    "loop",
+    "cycle",
+    "refresh"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/arrow-loop'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/arrow-right",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Arrow right",
+   "description": "Chunky paper arrow pointing right that nudges forward. Use for next step, direction, progress or \"leads to\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "arrow",
+    "direction",
+    "next"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/arrow-right'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/arrow-up",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Arrow up",
+   "description": "Chunky arrow pointing up that rises and settles. Use for growth, increase, upload or improvement.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "arrow",
+    "up",
+    "growth",
+    "increase"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/arrow-up'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/banknote",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Banknote",
+   "description": "Green paper banknote with a round portrait-free seal and a currency symbol (param symbol). Use for cash, payment, salary or price.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    },
+    "symbol": {
+     "type": "string",
+     "default": "$",
+     "desc": "one character"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "money",
+    "cash",
+    "payment",
+    "price"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/banknote'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/battery",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Battery",
+   "description": "Battery whose charge level (param level 0-100) fills in; green when high, red when low. Use for energy, charge, stamina or running out.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    },
+    "level": {
+     "type": "number",
+     "default": 80,
+     "desc": "charge 0-100"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "fill": {
+     "default": 0.4,
+     "desc": "charge fills"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "battery",
+    "energy",
+    "charge",
+    "level"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/battery'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/bell",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Bell",
+   "description": "Notification bell that swings and rings at anchor ring (decaying swing, then still). Use for alerts, reminders or notifications.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "ring": {
+     "default": 0.7,
+     "desc": "bell starts ringing"
+    }
+   },
+   "markers": [
+    "pop",
+    "chime"
+   ],
+   "tags": [
+    "bell",
+    "notification",
+    "alert",
+    "reminder"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/bell'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/bug",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Bug",
+   "description": "Red beetle with wiggling legs and antennae. Use for software bugs, errors, defects or pests.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "bug",
+    "error",
+    "defect",
+    "software"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/bug'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/bulb",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Light bulb",
+   "description": "Light bulb that switches on (param on) with a glow of ink rays. Use for ideas, tips, insight or \"aha\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    },
+    "on": {
+     "type": "boolean",
+     "default": true,
+     "desc": "bulb lights up"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "on": {
+     "default": 1,
+     "desc": "bulb switches on"
+    }
+   },
+   "markers": [
+    "pop",
+    "chime"
+   ],
+   "tags": [
+    "idea",
+    "bulb",
+    "tip",
+    "insight"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/bulb'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/calendar",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Calendar page",
+   "description": "Wall-calendar page with rings, a red header and a big day number (param day). Use for dates, deadlines, schedules or \"on Friday\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    },
+    "day": {
+     "type": "string",
+     "default": "14",
+     "desc": "big day number"
+    },
+    "label": {
+     "type": "string",
+     "default": "MAY",
+     "desc": "month label, up to 4 letters"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "calendar",
+    "date",
+    "schedule",
+    "deadline"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/calendar'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/cart",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Shopping cart",
+   "description": "Wire shopping cart with a basket; wheels turn slowly. Use for e-commerce, buying, checkout or retail.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "cart",
+    "shopping",
+    "ecommerce",
+    "checkout"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/cart'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/chart-bars",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Bar chart icon",
+   "description": "Small bar-chart icon with rising bars and a trend line (param values). Use for analytics, metrics, reports or growth.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    },
+    "values": {
+     "type": "array",
+     "default": [
+      35,
+      55,
+      45,
+      80,
+      100
+     ],
+     "desc": "3-6 bar heights 0-100"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "bars": {
+     "default": 0.3,
+     "desc": "bars start growing"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "chart",
+    "analytics",
+    "metrics",
+    "report"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/chart-bars'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/chat-bubble",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Chat bubble",
+   "description": "Speech bubble with three typing dots or a short text (param text). Use for comments, messages, feedback or conversation.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    },
+    "text": {
+     "type": "string",
+     "default": "",
+     "desc": "short text (max 6 chars); empty shows typing dots"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "chat",
+    "message",
+    "comment",
+    "feedback"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/chat-bubble'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/check-badge",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Check badge",
+   "description": "Scalloped green badge with a check mark that draws in. Use for success, verified, approved or done.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "check": {
+     "default": 0.45,
+     "desc": "check mark draws"
+    }
+   },
+   "markers": [
+    "pop",
+    "chime"
+   ],
+   "tags": [
+    "check",
+    "success",
+    "verified",
+    "done"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/check-badge'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/clock",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Clock",
+   "description": "Round wall clock whose minute hand sweeps (closed-form, never stops). Use for time, speed, deadlines or waiting.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "clock",
+    "time",
+    "speed",
+    "deadline"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/clock'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/cloud",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Cloud",
+   "description": "Flat paper cloud, optionally the cloud-storage symbol. Use for cloud services, uploads, storage or weather-free \"the cloud\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "cloud",
+    "storage",
+    "upload",
+    "internet"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/cloud'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/coin",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Coin",
+   "description": "Mustard coin that spins once as it appears, with a printed symbol (param symbol). Use for money, price, rewards or cost.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    },
+    "symbol": {
+     "type": "string",
+     "default": "$",
+     "desc": "one character on the coin"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "spin": {
+     "default": 0.1,
+     "desc": "spin starts"
+    }
+   },
+   "markers": [
+    "pop",
+    "chime"
+   ],
+   "tags": [
+    "coin",
+    "money",
+    "price",
+    "cost"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/coin'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/coin-stack",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Coin stack",
+   "description": "Stack of mustard coins that grows coin by coin (param count). Use for savings, revenue, budget or accumulating money.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    },
+    "count": {
+     "type": "number",
+     "default": 4,
+     "desc": "coins in the stack (1-6)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "stack": {
+     "default": 0.4,
+     "desc": "first coin drops"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "money",
+    "coins",
+    "savings",
+    "revenue"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/coin-stack'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/cross-badge",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Cross badge",
+   "description": "Round red badge with a cross that pops. Use for failure, error, rejected or \"no\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "cross": {
+     "default": 0.45,
+     "desc": "cross pops"
+    }
+   },
+   "markers": [
+    "pop",
+    "thud"
+   ],
+   "tags": [
+    "cross",
+    "error",
+    "fail",
+    "no"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/cross-badge'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/database",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Database",
+   "description": "Cylinder database icon with stacked bands. Use for data, storage, records or SQL.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "database",
+    "data",
+    "storage",
+    "sql"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/database'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/document",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Document",
+   "description": "Paper sheet with a folded corner and text lines. Use for reports, contracts, notes or any file.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "document",
+    "file",
+    "paper",
+    "report"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/document'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/envelope",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Envelope",
+   "description": "Closed envelope with a flap and a red seal dot. Use for email, newsletters, messages or mail.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "email",
+    "mail",
+    "message",
+    "newsletter"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/envelope'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/flag",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Flag",
+   "description": "Waving flag on a pole (cloth wave is a closed-form sine). Use for milestones, launch, goals or checkpoints.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "flag",
+    "milestone",
+    "launch",
+    "goal"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/flag'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/folder",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Folder",
+   "description": "Manila folder with a tab and a peeking sheet. Use for files, projects, documents or organising.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "folder",
+    "files",
+    "project",
+    "organise"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/folder'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/gear",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Gear",
+   "description": "Cog that rotates steadily (closed-form angle). Param teeth sets the tooth count. Use for settings, engineering, process or automation.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    },
+    "teeth": {
+     "type": "number",
+     "default": 8,
+     "desc": "number of teeth (6-12)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "gear",
+    "settings",
+    "cog",
+    "automation"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/gear'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/heart",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Heart",
+   "description": "Pink-red heart that beats gently. Use for love, likes, favourites, health or care.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "heart",
+    "like",
+    "love",
+    "favourite"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/heart'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/hourglass",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Hourglass",
+   "description": "Hourglass with sand falling and the glass flipping every 6 s (closed-form). Use for waiting, time left, patience or delay.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "time",
+    "waiting",
+    "delay",
+    "hourglass"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/hourglass'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/key",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Key",
+   "description": "Chunky key with a round bow and two teeth. Use for access, login, solutions or \"the key to\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "key",
+    "access",
+    "login",
+    "password"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/key'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/laptop",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Laptop",
+   "description": "Open laptop with a lit screen. Use for software, work, writing or browsing.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "device",
+    "laptop",
+    "computer",
+    "work"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/laptop'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/lock",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Padlock",
+   "description": "Padlock with keyhole; param locked=false opens the shackle at anchor unlock. Use for security, privacy, paywalls or access.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    },
+    "locked": {
+     "type": "boolean",
+     "default": true,
+     "desc": "false = shackle lifts open"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "unlock": {
+     "default": 1,
+     "desc": "shackle opens when locked=false"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "lock",
+    "security",
+    "privacy",
+    "password"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/lock'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/magnifier",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Magnifier",
+   "description": "Magnifying glass with a pale lens and a glint that sweeps; the whole icon sways. Use for search, inspect, SEO or \"look closer\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "search",
+    "magnifier",
+    "inspect",
+    "find"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/magnifier'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/megaphone",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Megaphone",
+   "description": "Cone megaphone with sound arcs that pulse. Use for announcements, marketing, shouting out or news.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh"
+   ],
+   "tags": [
+    "announce",
+    "marketing",
+    "megaphone",
+    "news"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/megaphone'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/monitor",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Monitor",
+   "description": "Desktop monitor on a stand showing a chart-like layout. Use for dashboards, desktop software or \"on screen\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "device",
+    "monitor",
+    "screen",
+    "desktop"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/monitor'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/parcel",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Parcel",
+   "description": "Cardboard parcel with tape and a label. Use for shipping, delivery, packages or products.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "parcel",
+    "package",
+    "shipping",
+    "delivery"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/parcel'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/phone",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Phone",
+   "description": "Smartphone icon whose screen switches on (param on) with a bar and content lines. Use for mobile apps, notifications or \"on your phone\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    },
+    "on": {
+     "type": "boolean",
+     "default": true,
+     "desc": "screen lights up"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "screen": {
+     "default": 1,
+     "desc": "screen turns on"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "device",
+    "phone",
+    "mobile",
+    "app"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/phone'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/server",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Server rack",
+   "description": "Three stacked server units with blinking status lights. Use for hosting, backend, infrastructure or \"the server\".",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "server",
+    "backend",
+    "hosting",
+    "infrastructure"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/server'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/shield",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Shield with check",
+   "description": "Crest-shaped shield with a check mark. Use for protection, trust, safety, guarantees or security.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "shield",
+    "security",
+    "trust",
+    "protection"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/shield'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/star",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Star",
+   "description": "Five-point mustard star with a twinkling glint. Use for ratings, favourites, quality or highlights.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "star",
+    "rating",
+    "favourite",
+    "quality"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/star'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/tablet",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Tablet",
+   "description": "Tablet in portrait with a simple app layout. Use for reading, touch interfaces or lightweight apps.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "device",
+    "tablet",
+    "ipad",
+    "app"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/tablet'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-1.js"
+  },
+  {
+   "id": "obj/toggle",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Toggle switch",
+   "description": "Pill toggle switch that flips on (param on) at anchor flip. Use for settings, features, enable/disable or opt-in.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#2F7D5B",
+     "desc": "accent colour (any palette colour)"
+    },
+    "on": {
+     "type": "boolean",
+     "default": true,
+     "desc": "flips to ON"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    },
+    "flip": {
+     "default": 0.9,
+     "desc": "switch flips"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "toggle",
+    "switch",
+    "settings",
+    "feature"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/toggle'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/trophy",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Trophy",
+   "description": "Gold cup with handles and a base plate that glints. Use for winning, awards, first place or achievements.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "trophy",
+    "winner",
+    "award",
+    "success"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/trophy'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/warning",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Warning triangle",
+   "description": "Mustard warning triangle with an exclamation mark that shakes slightly. Use for caution, risk, pitfalls or alerts.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#F2B531",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "warning",
+    "caution",
+    "risk",
+    "alert"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/warning'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "obj/wifi",
+   "kind": "prop",
+   "mode": "both",
+   "title": "Wi-Fi signal",
+   "description": "Three signal arcs that light up one after another in a loop. Use for connectivity, online, wireless or signal strength.",
+   "duration": 3,
+   "holds": true,
+   "params": {
+    "col": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "accent colour (any palette colour)"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "icon pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "wifi",
+    "signal",
+    "online",
+    "connection"
+   ],
+   "bounds": [
+    -100,
+    -100,
+    200,
+    200
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['obj/wifi'].draw(g, t, {}); g.restore();",
+   "module": "objects/objects-2.js"
+  },
+  {
+   "id": "tech/app-window",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "App / browser window with cursor",
+   "description": "Generic browser window with a moving cursor that clicks, types or scrolls; the content is a list, a bar list or a form given as params. Use to explain a UI, a product flow or \"click here, then this happens\".",
+   "duration": 7,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "LIVE DEMO",
+     "desc": "mono kicker above the window"
+    },
+    "mode": {
+     "type": "string",
+     "default": "list",
+     "desc": "'list' | 'bars' | 'form'"
+    },
+    "url": {
+     "type": "string",
+     "default": "app.example.com/invoices",
+     "desc": "text in the address pill"
+    },
+    "items": {
+     "type": "array",
+     "default": [
+      "Invoice #1042",
+      "Invoice #1043",
+      "Invoice #1044",
+      "Invoice #1045",
+      "Invoice #1046",
+      "Invoice #1047",
+      "Invoice #1048"
+     ],
+     "desc": "row labels (list and bars)"
+    },
+    "tags": {
+     "type": "array",
+     "default": [
+      "PAID",
+      "DUE",
+      "PAID",
+      "OVERDUE",
+      "PAID",
+      "DUE",
+      "PAID"
+     ],
+     "desc": "status pills (list mode)"
+    },
+    "values": {
+     "type": "array",
+     "default": [
+      72,
+      55,
+      91,
+      38,
+      64,
+      47
+     ],
+     "desc": "bar values 0-100 (bars mode)"
+    },
+    "target": {
+     "type": "number",
+     "default": 2,
+     "desc": "row the cursor clicks (list/bars)"
+    },
+    "heading": {
+     "type": "string",
+     "default": "Join the newsletter",
+     "desc": "form heading"
+    },
+    "fields": {
+     "type": "array",
+     "default": [
+      "Name",
+      "Email"
+     ],
+     "desc": "form field labels (max 2)"
+    },
+    "inputs": {
+     "type": "array",
+     "default": [
+      "Ada Lovelace",
+      "ada@example.com"
+     ],
+     "desc": "text typed into the fields"
+    },
+    "button": {
+     "type": "string",
+     "default": "Subscribe",
+     "desc": "form button label"
+    },
+    "toast": {
+     "type": "string",
+     "default": "Done",
+     "desc": "green confirmation pill after the click"
+    },
+    "cps": {
+     "type": "number",
+     "default": 14,
+     "desc": "typing speed, characters per second"
+    }
+   },
+   "anchors": {
+    "window": {
+     "default": 0,
+     "desc": "window pops in"
+    },
+    "cursor": {
+     "default": 0.9,
+     "desc": "cursor appears and starts moving"
+    },
+    "type": {
+     "default": 1.2,
+     "desc": "typing starts (form mode)"
+    },
+    "click": {
+     "default": 2.6,
+     "desc": "click moment (form mode waits for typing to finish)"
+    },
+    "result": {
+     "default": 2.9,
+     "desc": "toast / highlight result"
+    },
+    "scroll": {
+     "default": 3.8,
+     "desc": "list scrolls (list mode with overflow)"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick",
+    "stamp",
+    "slide",
+    "chime",
+    "whoosh"
+   ],
+   "tags": [
+    "ui",
+    "app",
+    "browser",
+    "cursor",
+    "click",
+    "demo",
+    "form",
+    "screen"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/app-window'].draw(g, t, { mode: 'form', heading: 'Get early access', inputs: ['Sam', 'sam@mail.com'], button: 'Join' })",
+   "module": "technical/scenes-b.js"
+  },
+  {
+   "id": "tech/architecture",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Architecture (client - server - database)",
+   "description": "Three boxes in a row joined by arrows; request packets travel right and responses return, with latency labels on each hop. Use for how a request flows through a system.",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "UNDER THE HOOD",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "What happens on a click",
+     "desc": "headline"
+    },
+    "nodes": {
+     "type": "array",
+     "default": [
+      "Browser",
+      "API server",
+      "Database"
+     ],
+     "desc": "three node names"
+    },
+    "latencies": {
+     "type": "array",
+     "default": [
+      "40 ms",
+      "8 ms"
+     ],
+     "desc": "latency label for each hop"
+    },
+    "request": {
+     "type": "string",
+     "default": "GET",
+     "desc": "text on the request packet"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "nodes": {
+     "default": 0.6,
+     "desc": "first node pops"
+    },
+    "links": {
+     "default": 1.5,
+     "desc": "arrows draw"
+    },
+    "packets": {
+     "default": 2.6,
+     "desc": "first request leaves"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh",
+    "tick",
+    "chime"
+   ],
+   "tags": [
+    "architecture",
+    "client",
+    "server",
+    "database",
+    "latency",
+    "request"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/architecture'].draw(g, t, { nodes: ['App','Cache','Store'], latencies: ['2 ms','30 ms'] })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/badge",
+   "kind": "part",
+   "mode": "technical",
+   "title": "Line badge",
+   "description": "Rounded mono label pill (branch name, tag, status). Colour is a palette colour.",
+   "duration": 2,
+   "holds": true,
+   "params": {
+    "label": {
+     "type": "string",
+     "default": "main",
+     "desc": "text"
+    },
+    "w": {
+     "type": "number",
+     "default": 90,
+     "desc": "width px"
+    },
+    "col": {
+     "type": "color",
+     "default": "#221E1A",
+     "desc": "fill colour"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "seed",
+    "part"
+   ],
+   "bounds": [
+    -100,
+    -20,
+    200,
+    40
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['tech/badge'].draw(g, t, {}); g.restore();",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/big-stat",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Big stat (counting number)",
+   "description": "One giant misregistered number that counts up on a halftone disc with a label underneath. Use for a single headline statistic, price, percentage or count.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "BY THE NUMBERS",
+     "desc": "mono kicker"
+    },
+    "value": {
+     "type": "number",
+     "default": 87,
+     "desc": "final value"
+    },
+    "prefix": {
+     "type": "string",
+     "default": "",
+     "desc": "text before the number, e.g. $"
+    },
+    "suffix": {
+     "type": "string",
+     "default": "%",
+     "desc": "text after the number"
+    },
+    "decimals": {
+     "type": "number",
+     "default": 0,
+     "desc": "decimal places"
+    },
+    "label": {
+     "type": "string",
+     "default": "of buyers read reviews first",
+     "desc": "italic line under the number"
+    },
+    "note": {
+     "type": "string",
+     "default": "SOURCE: SURVEY 2026",
+     "desc": "small mono note at the bottom"
+    },
+    "accent": {
+     "type": "color",
+     "default": "#E8452C",
+     "desc": "number plate colour"
+    },
+    "countDur": {
+     "type": "number",
+     "default": 1.4,
+     "desc": "seconds the count takes"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "disc": {
+     "default": 0.1,
+     "desc": "halftone disc grows"
+    },
+    "count": {
+     "default": 0.5,
+     "desc": "number starts counting"
+    },
+    "label": {
+     "default": 1.9,
+     "desc": "label fades in"
+    },
+    "note": {
+     "default": 2.3,
+     "desc": "note fades in"
+    }
+   },
+   "markers": [
+    "tick",
+    "pop",
+    "thud"
+   ],
+   "tags": [
+    "statistic",
+    "number",
+    "hero",
+    "percent",
+    "counter"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/big-stat'].draw(g, t, { value: 3.2, prefix: '$', suffix: 'M', decimals: 1, label: 'raised in week one' })",
+   "module": "technical/scenes-a.js"
+  },
+  {
+   "id": "tech/calendar-gantt",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Gantt / schedule",
+   "description": "Weekly Gantt chart: task bars grow across a week grid and a TODAY marker bobs on the current week. Use for project plans, schedules, sprints or \"who does what when\".",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE PLAN",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "Eight weeks to launch",
+     "desc": "headline"
+    },
+    "tasks": {
+     "type": "array",
+     "default": [
+      "Research|0|2",
+      "Design|1|3",
+      "Build|3|4",
+      "Test|6|2",
+      "Launch|7|1"
+     ],
+     "desc": "up to 6 strings 'label|startWeek|weeks' (0-based)"
+    },
+    "weeks": {
+     "type": "number",
+     "default": 8,
+     "desc": "number of week columns (4-12)"
+    },
+    "today": {
+     "type": "number",
+     "default": 3,
+     "desc": "current week index"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "grid": {
+     "default": 0.4,
+     "desc": "grid draws"
+    },
+    "bars": {
+     "default": 1,
+     "desc": "first bar grows"
+    },
+    "today": {
+     "default": 2.6,
+     "desc": "TODAY marker drops"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh",
+    "tick",
+    "stamp"
+   ],
+   "tags": [
+    "gantt",
+    "schedule",
+    "calendar",
+    "plan",
+    "timeline"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/calendar-gantt'].draw(g, t, { tasks: ['Write|0|2','Edit|2|1'], weeks: 4, today: 1 })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/chart-draw",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Chart (bar, line or donut)",
+   "description": "Animated bar, line or donut chart drawn on paper with value labels and one highlighted item. Use to show a trend, comparison or share of a whole from a small data set (2-8 values).",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE TREND",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "Signups keep climbing",
+     "desc": "italic headline"
+    },
+    "type": {
+     "type": "string",
+     "default": "bar",
+     "desc": "'bar' | 'line' | 'donut'"
+    },
+    "data": {
+     "type": "array",
+     "default": [
+      34,
+      52,
+      47,
+      78,
+      91
+     ],
+     "desc": "numbers (for donut: shares, any scale)"
+    },
+    "labels": {
+     "type": "array",
+     "default": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri"
+     ],
+     "desc": "one label per value"
+    },
+    "highlight": {
+     "type": "number",
+     "default": -1,
+     "desc": "index to emphasise (-1 = the largest)"
+    },
+    "unit": {
+     "type": "string",
+     "default": "",
+     "desc": "suffix on value labels e.g. % or k"
+    },
+    "step": {
+     "type": "number",
+     "default": 0.18,
+     "desc": "seconds between items"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "chart": {
+     "default": 0.7,
+     "desc": "first bar/segment/line starts"
+    },
+    "labels": {
+     "default": 1.6,
+     "desc": "value labels pop (offset by step)"
+    },
+    "highlight": {
+     "default": 2.8,
+     "desc": "highlight tag and emphasis"
+    }
+   },
+   "markers": [
+    "tick",
+    "pop",
+    "whoosh",
+    "slide"
+   ],
+   "tags": [
+    "chart",
+    "data",
+    "graph",
+    "bar",
+    "line",
+    "donut",
+    "statistic"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/chart-draw'].draw(g, t, { type: 'donut', data: [62, 25, 13], labels: ['Mobile','Desktop','Other'], unit: '%' })",
+   "module": "technical/scenes-a.js"
+  },
+  {
+   "id": "tech/checklist-reveal",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Checklist reveal",
+   "description": "Rows of ruled paper whose checkboxes get ticked (or crossed) one by one, with a running n/N counter. Use for requirements, benefits, a to-do or a pass/fail list of up to 7 items.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE CHECKLIST",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "Before you launch",
+     "desc": "italic headline"
+    },
+    "items": {
+     "type": "array",
+     "default": [
+      "Page loads under 2 s",
+      "Mobile layout works",
+      "Checkout tested",
+      "Analytics installed"
+     ],
+     "desc": "2 to 7 short lines"
+    },
+    "marks": {
+     "type": "array",
+     "default": [],
+     "desc": "per item 'check' or 'cross' (missing = check)"
+    },
+    "step": {
+     "type": "number",
+     "default": 0.55,
+     "desc": "seconds between rows"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "items": {
+     "default": 0.7,
+     "desc": "first row slides in"
+    },
+    "ticks": {
+     "default": 1.1,
+     "desc": "first tick lands (offset follows step)"
+    }
+   },
+   "markers": [
+    "tick",
+    "slide",
+    "chime",
+    "pop"
+   ],
+   "tags": [
+    "list",
+    "checklist",
+    "requirements",
+    "benefits",
+    "todo"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/checklist-reveal'].draw(g, t, { items: ['Fast','Safe','Cheap'], marks: ['check','check','cross'] })",
+   "module": "technical/scenes-a.js"
+  },
+  {
+   "id": "tech/chip",
+   "kind": "part",
+   "mode": "technical",
+   "title": "Commit chip",
+   "description": "Mustard tag chip with short mono text, slightly tilted; use as a token, id or packet.",
+   "duration": 2,
+   "holds": true,
+   "params": {
+    "label": {
+     "type": "string",
+     "default": "a3f9",
+     "desc": "text, max 5 chars"
+    },
+    "rot": {
+     "type": "number",
+     "default": -0.05,
+     "desc": "rotation radians"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "seed",
+    "part"
+   ],
+   "bounds": [
+    -40,
+    -30,
+    80,
+    60
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['tech/chip'].draw(g, t, {}); g.restore();",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/code-window",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Code window (typing, highlight, error)",
+   "description": "Paper-style editor window where lines type themselves with generic syntax colours, one line gets a mustard highlight and one gets a red squiggle with an error message. Use to show code, a bug, a fix or a command.",
+   "duration": 7,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE BUG",
+     "desc": "mono kicker"
+    },
+    "filename": {
+     "type": "string",
+     "default": "app.js",
+     "desc": "tab title"
+    },
+    "lines": {
+     "type": "array",
+     "default": [
+      "async function load(id) {",
+      "  const user = await getUser(id);",
+      "  const name = user.profile.name;",
+      "  return `Hello, ${name}`;",
+      "}",
+      "// crashes when profile is missing"
+     ],
+     "desc": "up to 9 code lines"
+    },
+    "highlight": {
+     "type": "number",
+     "default": 1,
+     "desc": "line index with the mustard highlight (-1 none)"
+    },
+    "error": {
+     "type": "number",
+     "default": 2,
+     "desc": "line index with the red squiggle (-1 none)"
+    },
+    "errorText": {
+     "type": "string",
+     "default": "TypeError: profile is undefined",
+     "desc": "message in the error pill"
+    },
+    "cps": {
+     "type": "number",
+     "default": 34,
+     "desc": "typing speed in characters per second"
+    }
+   },
+   "anchors": {
+    "window": {
+     "default": 0,
+     "desc": "window pops in"
+    },
+    "type": {
+     "default": 0.7,
+     "desc": "typing starts"
+    },
+    "highlight": {
+     "default": 3.2,
+     "desc": "highlight swipes in"
+    },
+    "error": {
+     "default": 4.2,
+     "desc": "squiggle draws and error pill drops in"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick",
+    "slide",
+    "stamp"
+   ],
+   "tags": [
+    "code",
+    "editor",
+    "bug",
+    "programming",
+    "developer",
+    "syntax"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/code-window'].draw(g, t, { filename: 'main.py', lines: ['def add(a, b):', '    return a + b'], error: -1, highlight: 1 })",
+   "module": "technical/scenes-b.js"
+  },
+  {
+   "id": "tech/compare-split",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Compare split (before/after, A vs B)",
+   "description": "Two paper panels side by side with a VS badge, a big value on each side and a few cross/check lines. Use for before and after, old versus new, option A versus B.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE DIFFERENCE",
+     "desc": "mono kicker"
+    },
+    "leftTitle": {
+     "type": "string",
+     "default": "BEFORE",
+     "desc": "left panel heading"
+    },
+    "rightTitle": {
+     "type": "string",
+     "default": "AFTER",
+     "desc": "right panel heading"
+    },
+    "leftValue": {
+     "type": "string",
+     "default": "8.2 s",
+     "desc": "big left value"
+    },
+    "rightValue": {
+     "type": "string",
+     "default": "1.1 s",
+     "desc": "big right value"
+    },
+    "leftItems": {
+     "type": "array",
+     "default": [
+      "Huge images",
+      "No caching",
+      "Blocking scripts"
+     ],
+     "desc": "up to 3 short lines, shown with crosses"
+    },
+    "rightItems": {
+     "type": "array",
+     "default": [
+      "Compressed",
+      "CDN cache",
+      "Deferred scripts"
+     ],
+     "desc": "up to 3 short lines, shown with checks"
+    },
+    "badge": {
+     "type": "string",
+     "default": "VS",
+     "desc": "centre badge text"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "panels": {
+     "default": 0.3,
+     "desc": "panels slide in"
+    },
+    "values": {
+     "default": 1,
+     "desc": "values pop"
+    },
+    "items": {
+     "default": 1.7,
+     "desc": "first line appears (0.3 s apart, left then right)"
+    },
+    "badge": {
+     "default": 0.8,
+     "desc": "badge pops"
+    }
+   },
+   "markers": [
+    "tick",
+    "slide",
+    "pop",
+    "thud"
+   ],
+   "tags": [
+    "compare",
+    "before-after",
+    "versus",
+    "split",
+    "ab-test"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/compare-split'].draw(g, t, { leftTitle: 'Plan A', rightTitle: 'Plan B', leftValue: '$40', rightValue: '$12' })",
+   "module": "technical/scenes-a.js"
+  },
+  {
+   "id": "tech/dashboard",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Dashboard (KPIs + sparklines)",
+   "description": "Four KPI cards with counting values, deltas and sparklines above a large trend chart. Use for metrics overviews, growth reports or \"here is how it is going\".",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE DASHBOARD",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "optional headline"
+    },
+    "kpis": {
+     "type": "array",
+     "default": [
+      "Revenue|48.2|+12%",
+      "Users|9.3|+8%",
+      "Churn|2.1|-0.4%",
+      "NPS|64|+5"
+     ],
+     "desc": "4 strings 'label|number|delta'"
+    },
+    "units": {
+     "type": "array",
+     "default": [
+      "k",
+      "k",
+      "%",
+      ""
+     ],
+     "desc": "unit suffix per KPI"
+    },
+    "trendLabel": {
+     "type": "string",
+     "default": "Weekly growth",
+     "desc": "label of the big chart"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "cards": {
+     "default": 0.4,
+     "desc": "first KPI card pops"
+    },
+    "count": {
+     "default": 0.7,
+     "desc": "values start counting"
+    },
+    "trend": {
+     "default": 1.6,
+     "desc": "big chart draws"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick",
+    "whoosh"
+   ],
+   "tags": [
+    "dashboard",
+    "kpi",
+    "metrics",
+    "analytics",
+    "report"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/dashboard'].draw(g, t, { kpis: ['MRR|12.4|+9%','Users|3.1|+4%','Churn|1.2|-0.2%','NPS|71|+3'] })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/flow-diagram",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Flow diagram (3-6 nodes)",
+   "description": "Boxes joined by arrows that draw in one after another, with little packets travelling along the path forever. Use for a pipeline, process, funnel of steps or data flow with 3 to 6 stages.",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "HOW IT WORKS",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "From idea to shipped",
+     "desc": "italic headline (empty string hides it)"
+    },
+    "nodes": {
+     "type": "array",
+     "default": [
+      "Idea",
+      "Build",
+      "Test",
+      "Ship"
+     ],
+     "desc": "3 to 6 node labels"
+    },
+    "notes": {
+     "type": "array",
+     "default": [
+      "sketch it",
+      "code it",
+      "break it",
+      "release"
+     ],
+     "desc": "small mono sub-label per node"
+    },
+    "packets": {
+     "type": "boolean",
+     "default": true,
+     "desc": "chips travel along the arrows"
+    },
+    "highlight": {
+     "type": "number",
+     "default": -1,
+     "desc": "index of node to ring in tomato (-1 = last node)"
+    },
+    "step": {
+     "type": "number",
+     "default": 0.35,
+     "desc": "seconds between nodes"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "nodes": {
+     "default": 0.6,
+     "desc": "first node pops (others follow by step)"
+    },
+    "arrows": {
+     "default": 1,
+     "desc": "first arrow starts drawing (offset follows nodes)"
+    },
+    "packets": {
+     "default": 3.2,
+     "desc": "first packet leaves node 1"
+    }
+   },
+   "markers": [
+    "tick",
+    "pop",
+    "whoosh",
+    "slide"
+   ],
+   "tags": [
+    "process",
+    "pipeline",
+    "steps",
+    "diagram",
+    "flow"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/flow-diagram'].draw(g, t, { nodes: ['Upload','Resize','Store'], notes: ['user','worker','bucket'] })",
+   "module": "technical/scenes-a.js"
+  },
+  {
+   "id": "tech/funnel",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Funnel",
+   "description": "Stacked bands that narrow stage by stage with a conversion percentage between them. Use for conversion funnels, drop-off or filtering (3-5 stages).",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE FUNNEL",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "Where people drop off",
+     "desc": "headline"
+    },
+    "stages": {
+     "type": "array",
+     "default": [
+      "Visitors|10000",
+      "Signups|3200",
+      "Trials|900",
+      "Customers|240"
+     ],
+     "desc": "3-5 strings 'label|number'"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "bands": {
+     "default": 0.7,
+     "desc": "first band drops in"
+    },
+    "rates": {
+     "default": 1.8,
+     "desc": "conversion pills appear"
+    }
+   },
+   "markers": [
+    "tick",
+    "pop",
+    "thud"
+   ],
+   "tags": [
+    "funnel",
+    "conversion",
+    "stages",
+    "drop-off"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/funnel'].draw(g, t, { stages: ['Views|5000','Clicks|900','Buys|120'] })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/isotype-crowd",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Isotype crowd (100 people, N turn red)",
+   "description": "Ten-by-ten grid of pawn icons where N of 100 flip red one by one while a giant misregistered number counts up on a halftone disc, with a stopwatch. Use for \"X out of 100\" statistics and drop-off rates.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE COST OF WAITING",
+     "desc": "mono kicker"
+    },
+    "headline": {
+     "type": "string",
+     "default": "Out of every 100 visitors\u2026",
+     "desc": "italic serif line under the kicker"
+    },
+    "left": {
+     "type": "number",
+     "default": 53,
+     "desc": "how many of the 100 pawns turn red (0-100); also the big number"
+    },
+    "subtitle": {
+     "type": "string",
+     "default": "never see the page.",
+     "desc": "italic line under the number"
+    },
+    "caption": {
+     "type": "string",
+     "default": "WHEN LOAD TIME HITS 3 SECONDS",
+     "desc": "mono caption"
+    },
+    "watch": {
+     "type": "boolean",
+     "default": true,
+     "desc": "show the stopwatch top right"
+    },
+    "pawnStep": {
+     "type": "number",
+     "default": 0.032,
+     "desc": "seconds between consecutive pawns flipping"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "headline": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "disc": {
+     "default": 0.1,
+     "desc": "halftone disc grows"
+    },
+    "pawns": {
+     "default": 0.4,
+     "desc": "first pawn starts flipping"
+    },
+    "subtitle": {
+     "default": 1.3,
+     "desc": "subtitle fades in"
+    },
+    "caption": {
+     "default": 1.5,
+     "desc": "caption fades in"
+    }
+   },
+   "markers": [
+    "tick",
+    "pop"
+   ],
+   "tags": [
+    "statistic",
+    "crowd",
+    "percent",
+    "isotype",
+    "seed"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/isotype-crowd'].draw(g, t, { left: 27, subtitle: 'bounce.' })",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/kanban-board",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Kanban board",
+   "description": "Three columns of sticky cards; the first card is lifted, carried to the next column and then to the last as columns reflow. Use for workflow stages, project status or \"moving work forward\".",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE BOARD",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "optional headline"
+    },
+    "cols": {
+     "type": "array",
+     "default": [
+      "To do|Design page,Write copy,Review",
+      "Doing|Build form,Fix bug",
+      "Done|Set up repo"
+     ],
+     "desc": "3 strings 'Title|card,card,card'"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "cols": {
+     "default": 0.4,
+     "desc": "columns pop in"
+    },
+    "move1": {
+     "default": 2,
+     "desc": "first card moves to column 2"
+    },
+    "move2": {
+     "default": 3.6,
+     "desc": "it then moves to column 3"
+    }
+   },
+   "markers": [
+    "pop",
+    "slide",
+    "thud",
+    "chime",
+    "tick"
+   ],
+   "tags": [
+    "kanban",
+    "board",
+    "workflow",
+    "tasks",
+    "status"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/kanban-board'].draw(g, t, { cols: ['Idea|A,B','Build|C','Ship|D'] })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/matrix-2x2",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "2x2 matrix",
+   "description": "Classic two-by-two grid with labelled axes, four quadrant titles and dots placed by coordinates; one quadrant can be highlighted. Use for prioritisation (impact vs effort), positioning or segmentation.",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "PRIORITISE",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "optional headline"
+    },
+    "xAxis": {
+     "type": "string",
+     "default": "EFFORT",
+     "desc": "horizontal axis label"
+    },
+    "yAxis": {
+     "type": "string",
+     "default": "IMPACT",
+     "desc": "vertical axis label"
+    },
+    "quads": {
+     "type": "array",
+     "default": [
+      "Quick wins",
+      "Big bets",
+      "Fill-ins",
+      "Money pits"
+     ],
+     "desc": "top-left, top-right, bottom-left, bottom-right"
+    },
+    "items": {
+     "type": "array",
+     "default": [
+      "Fix signup|.2|.85",
+      "New pricing|.75|.8",
+      "Dark mode|.3|.25",
+      "Rewrite app|.85|.2"
+     ],
+     "desc": "'label|x|y' with x,y 0..1 (y up)"
+    },
+    "highlight": {
+     "type": "number",
+     "default": 0,
+     "desc": "quadrant index to tint (-1 none)"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "axes": {
+     "default": 0.3,
+     "desc": "axes draw"
+    },
+    "quads": {
+     "default": 0.9,
+     "desc": "quadrant titles"
+    },
+    "items": {
+     "default": 1.6,
+     "desc": "first dot pops"
+    },
+    "highlight": {
+     "default": 3,
+     "desc": "quadrant tint"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick",
+    "whoosh"
+   ],
+   "tags": [
+    "matrix",
+    "2x2",
+    "priority",
+    "quadrant",
+    "framework"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/matrix-2x2'].draw(g, t, { xAxis: 'COST', yAxis: 'VALUE', highlight: 1 })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/metro-map",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Metro map (branch and merge)",
+   "description": "Transit-map explainer with three coloured lines that draw themselves, labelled stations, commit chips riding the lines and a release flag. Use for workflows, version control, pipelines or any \"paths that diverge and merge\" idea.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "ROUTE MAP  No. 42",
+     "desc": "small mono kicker above the title"
+    },
+    "words": {
+     "type": "array",
+     "default": [
+      "Branch.",
+      "Build.",
+      "Merge."
+     ],
+     "desc": "three headline words; the third is italic with a mustard highlight"
+    },
+    "lineLabels": {
+     "type": "array",
+     "default": [
+      "main",
+      "feature/login",
+      "hotfix"
+     ],
+     "desc": "badge text on the main / feature / hotfix line"
+    },
+    "lineW": {
+     "type": "array",
+     "default": [
+      74,
+      134,
+      90
+     ],
+     "desc": "badge widths in px, to fit the labels"
+    },
+    "stations": {
+     "type": "array",
+     "default": [
+      "init",
+      "login form",
+      "tests pass",
+      "fix crash",
+      "production"
+     ],
+     "desc": "labels: start, two on the feature line, one on hotfix, end"
+    },
+    "commits": {
+     "type": "array",
+     "default": [
+      "a3f9",
+      "7be2"
+     ],
+     "desc": "text of the two chips that ride the lines"
+    },
+    "flag": {
+     "type": "string",
+     "default": "v2.0",
+     "desc": "text on the release flag"
+    },
+    "footer": {
+     "type": "string",
+     "default": "ALL ROADS LEAD TO MAIN.",
+     "desc": "small mono footer line"
+    },
+    "titleStep": {
+     "type": "number",
+     "default": 0.3,
+     "desc": "seconds between the three title words"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "first title word (others follow by titleStep)"
+    },
+    "highlight": {
+     "default": 1.25,
+     "desc": "mustard highlighter swipe on word 3"
+    },
+    "mainLine": {
+     "default": 0.3,
+     "desc": "main line starts drawing"
+    },
+    "featureLine": {
+     "default": 1.1,
+     "desc": "feature line starts"
+    },
+    "hotfixLine": {
+     "default": 1.5,
+     "desc": "hotfix line starts"
+    },
+    "commitA": {
+     "default": 2.1,
+     "desc": "first chip departs"
+    },
+    "commitB": {
+     "default": 2.3,
+     "desc": "second chip departs"
+    },
+    "flag": {
+     "default": 2.7,
+     "desc": "flag pops at terminus"
+    },
+    "footer": {
+     "default": 2.4,
+     "desc": "footer fades in"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh",
+    "slide",
+    "stamp",
+    "tick"
+   ],
+   "tags": [
+    "workflow",
+    "git",
+    "map",
+    "process",
+    "seed"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/metro-map'].draw(g, t, { words: ['Plan.', 'Ship.', 'Learn.'], flag: 'v1' })",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/network-graph",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Network graph",
+   "description": "Hub-and-spoke network of dots with edges that draw in and pulses travelling along them. Use for connections, communities, integrations, microservices or \"everything is linked\".",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE NETWORK",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "Everything is connected",
+     "desc": "headline"
+    },
+    "labels": {
+     "type": "array",
+     "default": [
+      "Hub",
+      "API",
+      "Auth",
+      "Data",
+      "Cache",
+      "Queue",
+      "Web"
+     ],
+     "desc": "node labels; first is the big central node"
+    },
+    "seed": {
+     "type": "number",
+     "default": 5,
+     "desc": "layout seed"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "nodes": {
+     "default": 0.5,
+     "desc": "first node pops"
+    },
+    "edges": {
+     "default": 1.4,
+     "desc": "edges start drawing"
+    },
+    "pulses": {
+     "default": 2.8,
+     "desc": "pulses start travelling"
+    }
+   },
+   "markers": [
+    "pop",
+    "whoosh",
+    "tick"
+   ],
+   "tags": [
+    "network",
+    "graph",
+    "connections",
+    "nodes",
+    "integration"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/network-graph'].draw(g, t, { labels: ['Core','A','B','C','D'] })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/pawn",
+   "kind": "part",
+   "mode": "technical",
+   "title": "Isotype pawn",
+   "description": "Single isotype person icon, outline (off) or red (on). Scale ~2-3 for a hero icon.",
+   "duration": 2,
+   "holds": true,
+   "params": {
+    "on": {
+     "type": "boolean",
+     "default": true,
+     "desc": "red when true"
+    },
+    "s": {
+     "type": "number",
+     "default": 1.4,
+     "desc": "scale"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "pops in"
+    },
+    "flip": {
+     "default": 1,
+     "desc": "turns red (only when on=true)"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "seed",
+    "part"
+   ],
+   "bounds": [
+    -20,
+    -50,
+    40,
+    56
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['tech/pawn'].draw(g, t, {}); g.restore();",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/phone-mock",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Phone mock (notification, tap, swipe)",
+   "description": "Large phone showing an app grid; a notification banner drops in, a finger taps it and the screen swipes to a detail view. Use for mobile app flows, alerts and \"then you get a notification\".",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "ON YOUR PHONE",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "italic headline (empty hides it)"
+    },
+    "appName": {
+     "type": "string",
+     "default": "Pay",
+     "desc": "app tile name on the home screen"
+    },
+    "notifTitle": {
+     "type": "string",
+     "default": "Payment received",
+     "desc": "notification headline"
+    },
+    "notifBody": {
+     "type": "string",
+     "default": "$240 from Alex",
+     "desc": "notification body"
+    },
+    "detail": {
+     "type": "array",
+     "default": [
+      "Alex|+$240",
+      "Sam|-$18",
+      "Lena|+$60"
+     ],
+     "desc": "detail rows 'name|amount' after the swipe"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "phone": {
+     "default": 0,
+     "desc": "phone slides up"
+    },
+    "notify": {
+     "default": 1,
+     "desc": "banner drops in"
+    },
+    "tap": {
+     "default": 2.4,
+     "desc": "finger taps the banner"
+    },
+    "swipe": {
+     "default": 2.8,
+     "desc": "screen swipes to the detail view"
+    }
+   },
+   "markers": [
+    "slide",
+    "pop",
+    "tick",
+    "whoosh",
+    "chime"
+   ],
+   "tags": [
+    "phone",
+    "mobile",
+    "notification",
+    "tap",
+    "swipe",
+    "app"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/phone-mock'].draw(g, t, { notifTitle: 'New order', notifBody: '2 items - $38' })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/progress-loader",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Progress loader + skeleton",
+   "description": "Big progress bar with a counting percentage and a skeleton screen of shimmering grey blocks that turns into real content when loading completes. Use for loading, waiting, speed or \"before vs loaded\".",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "LOADING",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "italic headline (empty hides it)"
+    },
+    "label": {
+     "type": "string",
+     "default": "Loading your dashboard\u2026",
+     "desc": "text above the bar"
+    },
+    "pct": {
+     "type": "number",
+     "default": 100,
+     "desc": "final percent"
+    },
+    "loaded": {
+     "type": "array",
+     "default": [
+      "Welcome back",
+      "Revenue is up 12%",
+      "3 new messages"
+     ],
+     "desc": "three lines revealed when loading finishes"
+    },
+    "fill": {
+     "type": "number",
+     "default": 2.4,
+     "desc": "seconds the bar takes to fill"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "bar": {
+     "default": 0.5,
+     "desc": "bar starts filling"
+    },
+    "loaded": {
+     "default": 3.2,
+     "desc": "skeleton turns into content"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick",
+    "chime",
+    "whoosh"
+   ],
+   "tags": [
+    "loading",
+    "progress",
+    "skeleton",
+    "spinner",
+    "wait"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/progress-loader'].draw(g, t, { label: 'Uploading\u2026', fill: 3 })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/proof-card",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Proof card (screenshot on paper)",
+   "description": "Your screenshot (params.image) on a taped paper card that drops in with a slight tilt and shadow, then a red ring circles the key area and a VERIFIED stamp lands. Use for evidence, results, testimonials or \"here is the real thing\".",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "THE PROOF",
+     "desc": "mono kicker"
+    },
+    "image": {
+     "type": "image",
+     "default": null,
+     "desc": "ImageBitmap, HTMLImageElement or canvas; null draws a placeholder screenshot"
+    },
+    "caption": {
+     "type": "string",
+     "default": "Real result, week 3",
+     "desc": "caption on the card"
+    },
+    "badge": {
+     "type": "string",
+     "default": "VERIFIED",
+     "desc": "stamp text (empty hides it)"
+    },
+    "ring": {
+     "type": "array",
+     "default": [
+      0.5,
+      0.28,
+      0.38,
+      0.24
+     ],
+     "desc": "highlight ring [x,y,w,h] in 0..1 image coordinates; [] hides it"
+    },
+    "tilt": {
+     "type": "number",
+     "default": -0.03,
+     "desc": "resting card rotation in radians"
+    }
+   },
+   "anchors": {
+    "card": {
+     "default": 0.1,
+     "desc": "card drops in"
+    },
+    "ring": {
+     "default": 1.5,
+     "desc": "red ring draws around the highlight"
+    },
+    "stamp": {
+     "default": 2.3,
+     "desc": "stamp thuds down"
+    }
+   },
+   "markers": [
+    "slide",
+    "pop",
+    "stamp",
+    "tick",
+    "thud",
+    "whoosh"
+   ],
+   "tags": [
+    "screenshot",
+    "proof",
+    "evidence",
+    "image",
+    "testimonial",
+    "result"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/proof-card'].draw(g, t, { image: screenshotBitmap, caption: 'Dashboard, March', ring: [.1, .2, .3, .2] })",
+   "module": "technical/scenes-b.js"
+  },
+  {
+   "id": "tech/quote-card",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Quote card",
+   "description": "Large serif quote on a taped paper card with oversized quotation marks, an author line and an optional highlighted phrase. Use for testimonials, key sentences or citations.",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "IN THEIR WORDS",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "italic headline (empty hides it)"
+    },
+    "quote": {
+     "type": "string",
+     "default": "It cut our load time in half and nobody had to change a thing.",
+     "desc": "quote text (about 60-110 characters)"
+    },
+    "author": {
+     "type": "string",
+     "default": "Priya N., Head of Product",
+     "desc": "author line"
+    },
+    "mark": {
+     "type": "string",
+     "default": "cut our load time in half",
+     "desc": "phrase to highlight in mustard (must occur in the quote)"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "card": {
+     "default": 0.1,
+     "desc": "card drops in"
+    },
+    "quote": {
+     "default": 0.8,
+     "desc": "quote words appear"
+    },
+    "mark": {
+     "default": 2.2,
+     "desc": "highlighter swipe"
+    },
+    "author": {
+     "default": 2.6,
+     "desc": "author fades in"
+    }
+   },
+   "markers": [
+    "slide",
+    "thud",
+    "tick",
+    "pop"
+   ],
+   "tags": [
+    "quote",
+    "testimonial",
+    "citation",
+    "review"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/quote-card'].draw(g, t, { quote: 'Simple beats clever.', author: 'Ada', mark: 'Simple' })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/section-divider",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Section divider",
+   "description": "Chapter break: giant misregistered section number on a halftone disc, an ink bar that sweeps across, the section title and a subtitle. Use between topics or to announce a new part.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "PART",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "The solution",
+     "desc": "section title"
+    },
+    "number": {
+     "type": "string",
+     "default": "02",
+     "desc": "big number or word"
+    },
+    "sub": {
+     "type": "string",
+     "default": "how it actually works",
+     "desc": "mono subtitle"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 1.1,
+     "desc": "title rises"
+    },
+    "disc": {
+     "default": 0.1,
+     "desc": "disc grows"
+    },
+    "number": {
+     "default": 0.3,
+     "desc": "number slams in"
+    },
+    "bar": {
+     "default": 0.8,
+     "desc": "bar sweeps"
+    },
+    "sub": {
+     "default": 1.6,
+     "desc": "subtitle fades in"
+    }
+   },
+   "markers": [
+    "thud",
+    "whoosh",
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "section",
+    "divider",
+    "chapter",
+    "transition",
+    "number"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/section-divider'].draw(g, t, { number: '03', title: 'Results' })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/station",
+   "kind": "part",
+   "mode": "technical",
+   "title": "Station dot",
+   "description": "Metro station marker (ring dot). Use as a node on a route, timeline or flow.",
+   "duration": 2,
+   "holds": true,
+   "params": {
+    "kind": {
+     "type": "string",
+     "default": "ic",
+     "desc": "'n' small, 'ic' interchange, 'big' terminus"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "seed",
+    "part"
+   ],
+   "bounds": [
+    -30,
+    -30,
+    60,
+    60
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['tech/station'].draw(g, t, {}); g.restore();",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/stopwatch",
+   "kind": "part",
+   "mode": "technical",
+   "title": "Stopwatch",
+   "description": "Paper stopwatch whose red wedge sweeps one turn every 3 s (hand keeps ticking after).",
+   "duration": 2,
+   "holds": true,
+   "params": {
+    "s": {
+     "type": "number",
+     "default": 1.4,
+     "desc": "scale"
+    }
+   },
+   "anchors": {
+    "in": {
+     "default": 0,
+     "desc": "pops in"
+    }
+   },
+   "markers": [
+    "pop"
+   ],
+   "tags": [
+    "seed",
+    "part"
+   ],
+   "bounds": [
+    -60,
+    -70,
+    120,
+    120
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "g.save(); g.translate(640, 360); assets['tech/stopwatch'].draw(g, t, {}); g.restore();",
+   "module": "technical/seeds.js"
+  },
+  {
+   "id": "tech/terminal-log",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Terminal log",
+   "description": "Dark ink terminal window where commands type and log lines appear one by one, colour-coded by prefix (OK, WARN, ERR). Use for deployments, builds, installs or error output.",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "IN THE TERMINAL",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "",
+     "desc": "italic headline (empty hides it)"
+    },
+    "lines": {
+     "type": "array",
+     "default": [
+      "$ npm run build",
+      "compiling 48 modules...",
+      "OK  bundle 212 kB",
+      "WARN  2 unused imports",
+      "$ npm run deploy",
+      "OK  live at example.app"
+     ],
+     "desc": "up to 10 lines; a leading '$ ' is typed, OK/WARN/ERR are coloured"
+    },
+    "cps": {
+     "type": "number",
+     "default": 30,
+     "desc": "typing speed for $ lines"
+    },
+    "gap": {
+     "type": "number",
+     "default": 0.45,
+     "desc": "seconds between lines"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "window": {
+     "default": 0,
+     "desc": "window pops in"
+    },
+    "lines": {
+     "default": 0.6,
+     "desc": "first line starts"
+    }
+   },
+   "markers": [
+    "pop",
+    "tick"
+   ],
+   "tags": [
+    "terminal",
+    "log",
+    "cli",
+    "build",
+    "deploy"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/terminal-log'].draw(g, t, { lines: ['$ git push', 'ERR  rejected', '$ git pull', 'OK  up to date'] })",
+   "module": "technical/scenes-p1.js"
+  },
+  {
+   "id": "tech/timeline-roadmap",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Timeline / roadmap",
+   "description": "Horizontal route line with date and label per milestone, a green progress segment and a bobbing NOW tag on the current stop. Use for a roadmap, project phases, history or step-by-step plan with 3-6 milestones.",
+   "duration": 6,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "ROADMAP",
+     "desc": "mono kicker"
+    },
+    "title": {
+     "type": "string",
+     "default": "Where we are headed",
+     "desc": "italic headline"
+    },
+    "items": {
+     "type": "array",
+     "default": [
+      "Q1|Research",
+      "Q2|Prototype",
+      "Q3|Beta",
+      "Q4|Launch"
+     ],
+     "desc": "3 to 6 strings 'date|label'"
+    },
+    "current": {
+     "type": "number",
+     "default": 1,
+     "desc": "index of the milestone that is \"now\" (progress stops there)"
+    },
+    "now": {
+     "type": "string",
+     "default": "NOW",
+     "desc": "tag text"
+    },
+    "step": {
+     "type": "number",
+     "default": 0.4,
+     "desc": "seconds between stations"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "title": {
+     "default": 0.15,
+     "desc": "headline fades in"
+    },
+    "line": {
+     "default": 0.5,
+     "desc": "route line starts drawing"
+    },
+    "stations": {
+     "default": 0.8,
+     "desc": "first station pops"
+    },
+    "now": {
+     "default": 2.6,
+     "desc": "NOW tag drops in"
+    }
+   },
+   "markers": [
+    "tick",
+    "whoosh",
+    "pop",
+    "stamp"
+   ],
+   "tags": [
+    "timeline",
+    "roadmap",
+    "phases",
+    "schedule",
+    "history"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/timeline-roadmap'].draw(g, t, { items: ['2019|Founded','2022|Series A','2025|Global'], current: 2 })",
+   "module": "technical/scenes-a.js"
+  },
+  {
+   "id": "tech/title-card",
+   "kind": "scene",
+   "mode": "technical",
+   "title": "Title card",
+   "description": "Opening or chapter title: mono kicker plus a large serif headline in 1-3 lines with riso misregistration, one italic accent line with a mustard highlight, and a subtitle. Use to open a video, introduce a section or state the main claim.",
+   "duration": 5,
+   "holds": true,
+   "params": {
+    "bg": {
+     "type": "boolean",
+     "default": true,
+     "desc": "draw the paper background, ground inks and grain; false = transparent overlay (no background)"
+    },
+    "deco": {
+     "type": "string",
+     "default": "auto",
+     "desc": "ground-ink decoration: 'auto' (this scene's own variant), 'a', 'b', 'c' or 'none'"
+    },
+    "kicker": {
+     "type": "string",
+     "default": "EPISODE 01",
+     "desc": "mono kicker"
+    },
+    "lines": {
+     "type": "array",
+     "default": [
+      "Say hello",
+      "to paper."
+     ],
+     "desc": "1 to 3 headline lines"
+    },
+    "accent": {
+     "type": "number",
+     "default": 1,
+     "desc": "index of the italic highlighted line (-1 none)"
+    },
+    "sub": {
+     "type": "string",
+     "default": "A calmer way to explain things",
+     "desc": "mono caps subtitle"
+    },
+    "step": {
+     "type": "number",
+     "default": 0.28,
+     "desc": "seconds between lines"
+    }
+   },
+   "anchors": {
+    "kicker": {
+     "default": 0,
+     "desc": "kicker fades in"
+    },
+    "lines": {
+     "default": 0.2,
+     "desc": "first line rises in"
+    },
+    "accent": {
+     "default": 1,
+     "desc": "highlighter swipe on the accent line"
+    },
+    "sub": {
+     "default": 1.5,
+     "desc": "subtitle fades in"
+    },
+    "disc": {
+     "default": 0.1,
+     "desc": "halftone disc grows"
+    }
+   },
+   "markers": [
+    "tick",
+    "pop",
+    "slide"
+   ],
+   "tags": [
+    "title",
+    "intro",
+    "headline",
+    "opening",
+    "chapter"
+   ],
+   "bounds": [
+    0,
+    0,
+    1280,
+    720
+   ],
+   "origin": [
+    0,
+    0
+   ],
+   "example": "assets['tech/title-card'].draw(g, t, { kicker: 'PART TWO', lines: ['Why it', 'breaks'], accent: 1, sub: 'and how to fix it' })",
+   "module": "technical/scenes-b.js"
+  }
+ ]
+}

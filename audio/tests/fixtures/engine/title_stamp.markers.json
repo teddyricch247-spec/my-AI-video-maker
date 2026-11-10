@@ -1,0 +1,12 @@
+[
+ {
+  "id": "slide",
+  "t": 0.45,
+  "kind": "slide"
+ },
+ {
+  "id": "stamp",
+  "t": 1.6,
+  "kind": "stamp"
+ }
+]

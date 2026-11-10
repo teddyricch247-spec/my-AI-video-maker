@@ -1,0 +1,11 @@
+{
+ "modules": [
+  "fx/fx.js",
+  "objects/objects-1.js",
+  "objects/objects-2.js",
+  "technical/scenes-a.js",
+  "technical/scenes-b.js",
+  "technical/scenes-p1.js",
+  "technical/seeds.js"
+ ]
+}

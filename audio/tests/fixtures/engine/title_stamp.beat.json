@@ -1,0 +1,30 @@
+{
+ "project": {
+  "fps": 24,
+  "width": 1920,
+  "height": 1080
+ },
+ "beat": {
+  "idx": 1,
+  "f0": 240,
+  "f1": 336
+ },
+ "words": [
+  {
+   "id": "w0101",
+   "text": "Quarterly",
+   "start_ms": 10600,
+   "end_ms": 11200,
+   "f0": 254,
+   "f1": 269
+  },
+  {
+   "id": "w0102",
+   "text": "Report",
+   "start_ms": 11250,
+   "end_ms": 11800,
+   "f0": 270,
+   "f1": 283
+  }
+ ]
+}

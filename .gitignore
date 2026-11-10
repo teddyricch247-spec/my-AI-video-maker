@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+out/
+/dist/
+.venv/
+motion-assets/qa-report.md

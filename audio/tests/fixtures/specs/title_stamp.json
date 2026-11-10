@@ -1,0 +1,32 @@
+{
+ "fps": 24,
+ "frames": 96,
+ "samples": 192000,
+ "dur": 4.0,
+ "words": [
+  {
+   "id": "w0101",
+   "start": 0.583333,
+   "end": 1.208333
+  },
+  {
+   "id": "w0102",
+   "start": 1.25,
+   "end": 1.791667
+  }
+ ],
+ "markers": [
+  {
+   "id": "slide",
+   "t": 0.45,
+   "kind": "slide"
+  },
+  {
+   "id": "stamp",
+   "t": 1.6,
+   "kind": "stamp"
+  }
+ ],
+ "peak_dbfs": -6.0,
+ "seed": 0
+}
