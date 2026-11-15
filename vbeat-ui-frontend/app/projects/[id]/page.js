@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import ProjectHeader from '@/components/ProjectHeader';
 import Rail from '@/components/Rail';
 import Stats from '@/components/Stats';
 import BeatList from '@/components/BeatList';
@@ -16,11 +16,7 @@ export default async function Beats({ params }) {
   if (!p) notFound();
   return (
     <>
-      <nav className="top" aria-label="Breadcrumb">
-        <div><Link href="/">Projects</Link> / <b aria-current="page">{p.name}</b></div>
-      </nav>
-      <h1>{p.name}</h1>
-      <p className="sub">{p.words} words, last edited {p.when}</p>
+      <ProjectHeader p={p} tab="beats" />
       <Rail beats={p.beats} />
       <Stats p={p} />
       <h2 className="first">Beats</h2>

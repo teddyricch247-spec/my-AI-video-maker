@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import Shell from '@/components/Shell';
 import './globals.css';
+import './pages.css';
 
 const font = Plus_Jakarta_Sans({ subsets: ['latin'], weight: ['500', '600', '700', '800'], variable: '--font', display: 'swap' });
 

@@ -8,8 +8,13 @@ export default function Projects() {
   const next = Math.max(0, hero.beats.indexOf('review'));
   return (
     <>
-      <h1>Projects</h1>
-      <p className="sub">Pick up where you left off.</p>
+      <div className="head">
+        <div>
+          <h1>Projects</h1>
+          <p className="sub">Pick up where you left off.</p>
+        </div>
+        <Link href="/projects/new" className="btn pri">New project</Link>
+      </div>
       <Link href={`/projects/${hero.id}/beats/${next + 1}`} className="card hero">
         <span className="chip pri">Waiting for you</span>
         <b>Beat {next + 1} of {hero.beats.length} in {hero.name} is ready</b>
