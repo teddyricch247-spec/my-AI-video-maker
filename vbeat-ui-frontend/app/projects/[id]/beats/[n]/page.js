@@ -2,9 +2,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import Rail from '@/components/Rail';
 import Review from '@/components/Review';
-import Stats from '@/components/Stats';
 import BeatList from '@/components/BeatList';
-import { getProject, titleOf, lengthOf } from '@/lib/data';
+import { getProject, titleOf, lengthOf, counts } from '@/lib/data';
 
 export async function generateMetadata({ params }) {
   const { id, n } = await params;
@@ -21,6 +20,7 @@ export default async function Beat({ params }) {
   if (!p || !Number.isInteger(i) || i < 0 || i >= p.beats.length) notFound();
   const prev = i > 0 && `/projects/${id}/beats/${i}`;
   const next = i < p.beats.length - 1 && `/projects/${id}/beats/${i + 2}`;
+  const c = counts(p.beats);
   return (
     <>
       <nav className="top" aria-label="Breadcrumb">
@@ -38,10 +38,12 @@ export default async function Beat({ params }) {
           {next ? <Link href={next} className="ibtn" aria-label="Next beat"><Arrow d="M9 5l7 7-7 7" /></Link> : <span className="ibtn off" aria-hidden="true"><Arrow d="M9 5l7 7-7 7" /></span>}
         </div>
       </div>
-      <Rail beats={p.beats} current={i} />
-      <Stats p={p} />
-      <Review key={`${id}-${n}`} status={p.beats[i]} />
-      <h2>All beats in {p.name}</h2>
+      <div className="railwrap">
+        <Rail beats={p.beats} current={i} id={id} />
+        <p className="railcap">{c.approved} of {p.beats.length} approved. Tap a segment to jump to that beat.</p>
+      </div>
+      <Review key={`${id}-${n}`} status={p.beats[i]} i={i} />
+      <h2>Other beats in {p.name}</h2>
       <BeatList id={id} beats={p.beats} current={i} />
     </>
   );

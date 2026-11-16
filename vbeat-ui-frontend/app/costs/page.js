@@ -23,8 +23,8 @@ export default function Costs() {
           <h2>Last 7 days</h2>
           <div className="card chart">
             <div className="bars" role="img" aria-label={`Daily spend: ${DAYS.map(([d, v]) => `${d} $${v.toFixed(2)}`).join(', ')}`}>
-              {DAYS.map(([d, v]) => (
-                <div key={d}><em>${v.toFixed(2)}</em><i style={{ height: `${(v / MAX) * 100}%` }} /><small>{d}</small></div>
+              {DAYS.map(([d, v], k) => (
+                <div key={d} className={k === DAYS.length - 1 ? 'today' : ''}><em>${v.toFixed(2)}</em><i style={{ height: `${(v / MAX) * 100}%` }} /><small>{k === DAYS.length - 1 ? 'Today' : d}</small></div>
               ))}
             </div>
           </div>
