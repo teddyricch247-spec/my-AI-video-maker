@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import Showcase from "@/components/Showcase";
 import Footer from "@/components/Footer";
-import { Bento, How, Pricing, Faq, FinalCta } from "@/components/HomeSections";
+import { Bento, How, Faq, FinalCta } from "@/components/HomeSections";
 
 export default function Home() {
   return (
@@ -9,9 +9,8 @@ export default function Home() {
       <Hero />
       <main className="wrap">
         <Bento />
-        <How />
         <Showcase />
-        <Pricing />
+        <How />
         <Faq />
         <FinalCta />
         <Footer />

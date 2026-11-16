@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Logo from "./Logo";
 
 const LINKS = [
-  ["How it works", "/#how"],
   ["Examples", "/#showcase"],
-  ["Pricing", "/#pricing"],
+  ["How it works", "/#how"],
+  ["Pricing", "/pricing"],
   ["FAQ", "/#faq"],
 ];
 
@@ -16,10 +16,13 @@ export default function Nav({ cta }) {
 
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
+    const onScroll = () => setOpen(false);
     const onClick = (e) => ref.current && !ref.current.contains(e.target) && setOpen(false);
     document.addEventListener("keydown", onKey);
     document.addEventListener("click", onClick);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
+      window.removeEventListener("scroll", onScroll);
       document.removeEventListener("keydown", onKey);
       document.removeEventListener("click", onClick);
     };

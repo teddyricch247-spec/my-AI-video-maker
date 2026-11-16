@@ -116,7 +116,7 @@ export default function HeroStage() {
           </div>
         </div>
       </div>
-      <div className="glass g1"><b>72 hrs</b>average delivery</div>
+      <div className="glass g1"><b>3 days</b>typical first cut</div>
       <div className="glass g2"><b>1080p</b>MP4, yours to keep</div>
     </div>
   );

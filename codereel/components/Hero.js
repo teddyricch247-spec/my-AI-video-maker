@@ -24,11 +24,6 @@ export default function Hero() {
               </Link>
               <Link className="btn ghost" href="/#showcase">See examples</Link>
             </div>
-            <div className="proof">
-              <span><b>Flat price</b> per video</span>
-              <span><b>No calls</b> needed</span>
-              <span><b>2 rounds</b> of edits</span>
-            </div>
           </div>
           <HeroStage />
         </div>

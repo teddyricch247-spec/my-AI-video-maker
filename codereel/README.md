@@ -1,6 +1,6 @@
 # Codereel (Next.js, UI only)
 
-Front-end prototype: a home page and a 4-step order flow. No backend, no database, no real payments.
+Front-end prototype: a home page, a pricing page and a 4-step order flow. No backend, no database, no real payments.
 Everything the visitor types stays in the browser's memory and is never sent anywhere.
 
 ## Run locally
@@ -18,11 +18,12 @@ npm run dev      # http://localhost:3000
 | Path | What it is |
 | --- | --- |
 | `app/page.js` | Home page |
+| `app/pricing/page.js` | Pricing page (plans live in `components/PricingPlans.js`) |
 | `app/order/page.js` | Order page (style → details → payment → account) |
 | `components/OrderFlow.js` | The whole order flow (React state + form validation) |
 | `components/Showcase.js` | The looping "what we can make" reel in the middle of the home page |
 | `components/HeroStage.js` | The hero "writing code" animation |
-| `components/HomeSections.js` | Stats tiles, How it works, Pricing, FAQ, closing call-to-action |
+| `components/HomeSections.js` | Stats tiles, How it works, FAQ, closing call-to-action |
 | `app/globals.css` | All styles, including the drifting-cloud background |
 | `public/clouds/` | Cloud textures used by the background |
 
