@@ -4,6 +4,13 @@
 for approval. Read this file, then immediately write the files in section 3 and finish. If something is ambiguous, decide
 and move on.
 
+If the message starts with a one-line request ("make a video of this:", "create a video from this transcript"), that line
+is an instruction, not story: the transcript is the text after it, verbatim. If there is no such line, the whole message is the transcript.
+
+**This project is a skill, not a scratch app.** You are *editing* it into one specific hardcoded video. You never delete,
+rename, move or rewrite the protected files listed in section 2, and you never start a new project or re-scaffold. The video is
+hardcoded in source: no database, no API routes, no env vars, no accounts, no network calls.
+
 ## 1. The product (hard spec)
 
 A **Next.js app that is one 3D toon-shaded cartoon video of the transcript, with a single play button.**
@@ -18,7 +25,10 @@ A **Next.js app that is one 3D toon-shaded cartoon video of the transcript, with
 
 The player (`src/player/`) already does all of this. **You do not write UI.**
 
-## 2. What already exists (do NOT edit)
+## 2. What already exists (PROTECTED: never delete, rename or edit)
+
+Protected: everything in this table, plus `START_HERE.md`, `AGENTS.md`, `GEMINI.md`, `references/`, `public/fonts/`, `LICENSE`,
+`THIRD_PARTY_NOTICES.md`. If a protected file seems to have a bug, work around it from `src/video/`; do not change it.
 
 | Path | What it is |
 |---|---|
