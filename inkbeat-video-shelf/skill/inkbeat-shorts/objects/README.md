@@ -51,9 +51,13 @@ car.path(cp.path).crash(3.96); scene.add(car.group);             // or car.path(
 ```
 Car faces +z (drives toward +z), 4.2 m long; `crashPath` gives `.contact` (point on the trunk) and `.dir` for dust/stars. Crash = hood pops, nose bobs, smoke rises. Camera shake, dust and the comic star are scene code (see tree_road.js).
 
-## Rules (do not break)
+## Rules & practical clearances (do not break)
 1. Characters are ink-heavier than set pieces (hull multipliers inside `character.js`); do not add your own outlines.
 2. Everything is a pure function of t: never `Math.random`, `Date`, `performance.now`; no state that depends on call order (except `lookAt/reach/expression/talk`, which you set once).
 3. Camera: a 9:16 frame at 3.3 m is ~2 m wide; keep a pair within +-0.6 m, push in for close-ups; big moves >= 0.85 s. In 16:9 (`ctx.landscape`) the same distance shows ~5 m of width, so pairs fit side by side; use calm cuts (`calm()` in `lib/rig.js`), see `scenes/char_demo.js`.
 4. Wrong or missing object? Build it in the scene by the same contract: chunky rounded shapes, `toon()` colours from the palettes in `character.js`, ink via `inkMesh`, 5-15 primitives, real scale, own preview. Reused in 2+ scenes: move it to `objects/` and add it to `manifest.json`.
-5. Known limits: no fingers (mitten hands), hair styles swoop/puff only, ink = silhouettes only, `reach` accurate to ~4 cm.
+5. Geometry & attachment tips (verified on existing objects):
+   - **`makeTree` clearance**: `meta.canopyBottom` is `~1.7 m` (at default `height: 3.9`). Keep trunk-mounted signs or boards centered below `~1.5 m` world height or offset outward so wide corners never poke into foliage.
+   - **`makeCar` cabin**: the prebuilt car cabin is solid opaque geometry. If a story needs visible driver faces, eye-lines, or hands gripping a wheel, build a lightweight scene-local open-cab variant matching `toon()` / `inkMesh`.
+   - **`Head` socket**: `swoop` hair extends slightly up and forward—shift custom caps/hats slightly forward (`+z`) and verify with `--beatcheck` so the quiff doesn't clip through the brim.
+6. Known limits: no fingers (mitten hands), hair styles swoop/puff only, ink = silhouettes only, `reach` accurate to ~4 cm.

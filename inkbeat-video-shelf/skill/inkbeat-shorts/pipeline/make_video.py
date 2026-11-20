@@ -171,6 +171,66 @@ def code_fingerprint(scene):
     return h.hexdigest()
 
 
+def _beat_frames(scene, dur, fps, max_frames=20):
+    """Select representative frame indices from beat `at:` markers in scene code plus uniform timeline coverage."""
+    n = max(1, int(round(dur * fps)))
+    times = [min(0.15, dur * 0.5)]
+    scene_path = os.path.join(HERE, "scenes", scene + ".js")
+    if os.path.exists(scene_path):
+        src = open(scene_path, encoding="utf-8").read()
+        for m in re.finditer(r"\bat\s*:\s*(\d+(?:\.\d+)?)", src):
+            t = float(m.group(1))
+            if 0 <= t <= dur:
+                times.append(t)
+    # Always blend in evenly spaced samples so procedural timelines without `at:` are covered.
+    grid_n = 12
+    for i in range(grid_n):
+        times.append(dur * (i + 0.5) / grid_n)
+    frames = sorted({min(n - 1, max(0, int(round(t * fps)))) for t in times})
+    if len(frames) > max_frames:
+        frames = [frames[round(i * (len(frames) - 1) / (max_frames - 1))] for i in range(max_frames)]
+        frames = sorted(set(frames))
+    return frames
+
+
+def _make_sheet(mp4_path, sheet_path, dur, asp):
+    """Generate a 4x4 tiled contact sheet JPEG next to an encoded MP4 part."""
+    w = 480 if asp == "16:9" else 270
+    interval = max(0.25, dur / 16.0)
+    vf = f"fps=1/{interval:.3f},scale={w}:-1,tile=4x4"
+    run(["ffmpeg", "-y", "-loglevel", "error", "-i", mp4_path, "-vf", vf, "-frames:v", "1", sheet_path])
+
+
+def _make_beatcheck_sheet(frames_dir, frame_ids, fps, asp, out_sheet):
+    """Tile arbitrary beat-check frames with burned-in timecodes into one inspection JPEG."""
+    concat_file = os.path.join(frames_dir, "concat.txt")
+    font = os.path.join(HERE, "fonts", "Poppins-ExtraBold.ttf")
+    w = 480 if asp == "16:9" else 270
+    cols = 4
+    rows = max(1, math.ceil(len(frame_ids) / cols))
+    # Build individual labeled tiles first if font exists so each tile shows exact t=...s, then tile.
+    labeled = []
+    for idx, fid in enumerate(frame_ids):
+        src = os.path.join(frames_dir, f"{fid:04d}.jpg")
+        if not os.path.exists(src):
+            continue
+        dst = os.path.join(frames_dir, f"tile_{idx:03d}.jpg")
+        t_sec = fid / fps
+        vf = f"scale={w}:-1"
+        if os.path.exists(font):
+            label = f"{t_sec:.1f}s".replace(":", "\\:")
+            vf += f",drawtext=fontfile='{font}':text='{label}':x=10:y=10:fontsize=20:fontcolor=white:borderw=3:bordercolor=#12163b"
+        run(["ffmpeg", "-y", "-loglevel", "error", "-i", src, "-vf", vf, dst])
+        labeled.append(dst)
+    if not labeled:
+        return False
+    with open(concat_file, "w") as f:
+        for p in labeled:
+            f.write(f"file '{p}'\n")
+    run(["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0", "-i", concat_file, "-vf", f"tile={cols}x{rows}", "-frames:v", "1", out_sheet])
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--scene", required=True); ap.add_argument("--transcript"); ap.add_argument("--seconds", type=float)
@@ -184,14 +244,16 @@ def main():
     ap.add_argument("--chunk", type=int, default=120); ap.add_argument("--jobs", type=int, default=1)
     ap.add_argument("--tail", type=float, default=0.7, help="seconds of picture after the last word")
     ap.add_argument("--fresh", action="store_true", help="wipe this aspect+mode's frames and render from scratch")
+    ap.add_argument("--beatcheck", action="store_true", help="fast keyframe preview: render ~16-20 beat frames into beatcheck.jpg in seconds")
+    ap.add_argument("--no-sheet", action="store_true", help="skip auto-generating contact sheet JPEGs after rendering parts")
     ap.add_argument("--no-qa", action="store_true")
     a = ap.parse_args()
     asp = ASPECT_NAMES.get(a.aspect.lower().replace(" ", ""))
     if not asp: sys.exit("unknown --aspect %r (use 9:16 or 16:9)" % a.aspect)
-    W, H, SUB = SIZES[asp][a.mode]; OW, OH = OUT_SIZE[asp]; tag = asp.replace(":", "x")
+    W, H, SUB = SIZES[asp]["draft" if a.beatcheck else a.mode]; OW, OH = OUT_SIZE[asp]; tag = asp.replace(":", "x")
     caps = a.caps or ("sentence" if asp == "16:9" else "word")
     out = os.path.abspath(a.out or os.path.join("out", f"{a.scene}_{tag}_{a.mode}"))
-    frames = os.path.join(out, "frames", f"{tag}-{a.mode}"); os.makedirs(out, exist_ok=True)
+    os.makedirs(out, exist_ok=True)
 
     words_file, dur, ws = None, a.seconds, None
     if a.transcript:
@@ -200,6 +262,28 @@ def main():
         dur = dur or ws[-1][1] + a.tail
     if not dur: sys.exit("give --transcript or --seconds")
     n = int(round(dur * a.fps)); node = shutil.which("node") or sys.exit("node not found")
+
+    if a.beatcheck:
+        bc_frames = _beat_frames(a.scene, dur, a.fps)
+        bc_dir = os.path.join(out, "frames", f"{tag}-beatcheck")
+        if os.path.isdir(bc_dir):
+            shutil.rmtree(bc_dir)
+        os.makedirs(bc_dir, exist_ok=True)
+        cmd = [node, "render.js", "--scene", a.scene, "--w", str(W), "--h", str(H), "--fps", str(a.fps), "--sub", "1",
+               "--caps", caps, "--capscale", str(a.capscale), "--accent", a.accent,
+               "--frames-list", ",".join(str(x) for x in bc_frames), "--out", bc_dir]
+        if words_file:
+            cmd += ["--words", words_file]
+        t0 = time.time()
+        print(f"[{asp} beatcheck] {len(bc_frames)} keyframes across {dur:.2f}s at {W}x{H}")
+        print("  ", render_chunk(cmd))
+        out_sheet = os.path.join(out, "beatcheck.jpg")
+        _make_beatcheck_sheet(bc_dir, bc_frames, a.fps, asp, out_sheet)
+        shutil.rmtree(bc_dir, ignore_errors=True)
+        print(f"DONE beatcheck ({time.time() - t0:.1f}s): {out_sheet}")
+        return
+
+    frames = os.path.join(out, "frames", f"{tag}-{a.mode}")
 
     # stale-frame guard: frames are reused only when nothing that affects the picture changed
     sig = hashlib.sha1(json.dumps([asp, a.mode, W, H, SUB, a.fps, caps, a.capscale, a.accent, code_fingerprint(a.scene),
@@ -227,8 +311,8 @@ def main():
     else:                                             # no word times (--seconds only): equal parts on frame boundaries
         k = math.ceil(n / (a.part_seconds * a.fps)); cuts = [round(i * n / k) for i in range(k)] + [n]
     for f in os.listdir(out):                         # remove outputs of an earlier run with a different part count
-        if re.fullmatch(r"(video|part-\d+)\.mp4", f): os.remove(os.path.join(out, f))
-    parts = []
+        if re.fullmatch(r"(video|part-\d+)\.mp4|sheet(?:-part-\d+)?\.jpg", f): os.remove(os.path.join(out, f))
+    parts, sheets = [], []
     for p in range(len(cuts) - 1):
         a0, b0 = cuts[p], cuts[p + 1]; name = "video.mp4" if len(cuts) == 2 else f"part-{p + 1:02d}.mp4"; mp4 = os.path.join(out, name)
         enc = ["ffmpeg", "-y", "-loglevel", "error", "-framerate", str(a.fps), "-start_number", str(a0), "-i", os.path.join(frames, "%04d.jpg")]
@@ -237,16 +321,22 @@ def main():
                 "-crf", "15", "-pix_fmt", "yuv420p", "-movflags", "+faststart"]
         if a.audio: enc += ["-c:a", "aac", "-b:a", "192k"]
         run(enc + [mp4]); mb = os.path.getsize(mp4) / 1048576
-        parts.append({"file": name, "start": round(a0 / a.fps, 3), "end": round(b0 / a.fps, 3), "frames": b0 - a0, "seconds": round((b0 - a0) / a.fps, 2),
+        part_s = round((b0 - a0) / a.fps, 2)
+        parts.append({"file": name, "start": round(a0 / a.fps, 3), "end": round(b0 / a.fps, 3), "frames": b0 - a0, "seconds": part_s,
                       "mb": round(mb, 1), "over_45mb": mb > SIZE_SHRINK_MB})
         print(f"  {name}: {parts[-1]['start']:.2f}-{parts[-1]['end']:.2f}s, {mb:.1f} MB" + ("  (over 45 MB: it is shrunk automatically when saved)" if mb > SIZE_SHRINK_MB else ""))
+        if not a.no_sheet:
+            sheet_name = "sheet.jpg" if len(cuts) == 2 else f"sheet-part-{p + 1:02d}.jpg"
+            sheet_path = os.path.join(out, sheet_name)
+            _make_sheet(mp4, sheet_path, max(1.0, part_s), asp)
+            sheets.append(sheet_name)
     json.dump(parts, open(os.path.join(out, "parts.json"), "w"), indent=1)
 
     report = {"aspect": asp, "mode": a.mode, "captions": caps, "frames": n, "seconds": round(dur, 2), "render_s": round(rt, 1), "s_per_frame": round(rt / n, 3),
-              "parts": parts, "audio": "stem muxed (no voice)" if a.audio else "none (silent; voice-over is added in the editor)", "uploaded": False}
+              "parts": parts, "sheets": sheets, "audio": "stem muxed (no voice)" if a.audio else "none (silent; voice-over is added in the editor)", "uploaded": False}
     if not a.no_qa:
         try: import numpy  # QA scripts need numpy
-        except ImportError: a.no_qa = True; print("QA skipped: numpy missing (pip install numpy --break-system-packages)"); report["qa"] = "skipped: numpy missing"
+        except ImportError: a.no_qa = True; print("QA skipped: numpy missing (optional; pip install numpy --break-system-packages or pass --no-qa)"); report["qa"] = "skipped: numpy missing"
     if not a.no_qa:
         first = os.path.join(out, parts[0]["file"])
         for name in ("analyze_pacing", "flicker"):
@@ -260,7 +350,7 @@ def main():
                 if asp == "16:9": txt += "   (Shorts targets do not apply to 16:9; calm cuts are expected)"
             report[name] = txt; print(f"--- {name} ({parts[0]['file']}): {txt.splitlines()[0] if name == 'flicker' and txt else txt}")
     json.dump(report, open(os.path.join(out, "report.json"), "w"), indent=1)
-    print(f"\nDONE {len(parts)} file(s) in {out}  ({rt:.0f}s render). Nothing was uploaded; save to the shelf only when the owner asks.")
+    print(f"\nDONE {len(parts)} file(s) in {out}  ({rt:.0f}s render). Nothing was uploaded; save via web UI or upload.mjs when the owner asks.")
     for p in parts: print("  " + os.path.join(out, p["file"]))
 
 

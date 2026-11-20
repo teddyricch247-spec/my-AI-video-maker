@@ -7,8 +7,8 @@ description: Toon-shaded 3D cartoon videos in 9:16 (Shorts) and 16:9 (YouTube lo
 
 **Working rules for this skill (the owner's requirements, they override anything below):**
 1. **Both formats.** 9:16 for Shorts (default) and 16:9 for YouTube long form: `--aspect 9:16|16:9`. One scene file frames both through `ctx.landscape`.
-2. **Start at once.** The input is a transcript with a timestamp on every word, plus reference photos and/or a prompt. Do not ask for approval at gates; state your defaults in one line and render a `draft` immediately.
-3. **Render is not save.** Rendering writes only to the local render folder. Upload to Supabase happens only when the owner asks (`scripts/upload.mjs`).
+2. **Start at once.** The input is a transcript with a timestamp on every word, plus reference photos and/or a prompt. Do not ask for approval at gates; state your defaults in one line, run a fast `--beatcheck` first to verify framing/clipping in `beatcheck.jpg`, then render a `draft` immediately.
+3. **Render is not save — reply with the right link.** Rendering writes locally (surfacing automatically in the Next.js **Draft previews** section) and never uploads on its own. After a draft render, reply with the **Next.js Preview link** (`#drafts` on the dev app URL), `s/frame`, and `"not saved to the shelf yet"`. Upload to Supabase only when the owner asks (via `scripts/upload.mjs` or the web **Save to shelf** button), and reply with the ordered **Watch:** links, mode, `s/frame`, and file sizes.
 4. **No voice-over, ever.** The owner records it in their own editor. No TTS. Captions only; sound effects as in section 8 are fine (optional `--audio` stem, no voice).
 5. **Captions by format.** 9:16: 1-2 words popping on each word, large. 16:9: the full sentence, small, bottom centre, only the spoken word lit.
 6. **Long videos come in parts.** Over 30 s the render is cut into equal parts (cuts on pauses) that stitch seamlessly in an editor.
@@ -40,10 +40,10 @@ A field guide distilled from building 3D cartoon Shorts and long-form films with
 ## 0. Pick a route (read START_HERE.md first, run `python3 pipeline/doctor.py`)
 **Route A, the default: the offline pipeline in `pipeline/`.** Plain three.js (vendored in `vendor/`, no npm install of
 three) + Playwright + Python + ffmpeg. No Remotion, no internet needed, built for CPU-only sandboxes: about
-0.2 s/frame at 720x1280 with motion blur. One command turns a word-timestamp transcript into finished mp4 part(s):
+0.1–0.2 s/frame in `draft`/`fast`. Run `--beatcheck` first (~3–5 s) to inspect `beatcheck.jpg`, then render the full video:
 `python3 pipeline/make_video.py --scene <name> --transcript words.txt [--aspect 16:9] --mode draft|fast|final --out <folder>`.
 Modes (9:16 / 16:9): `draft` 540x960 / 960x540 no blur (iterate here), `fast` 720x1280 / 1280x720 4-sub-frame blur, `final` 1080x1920 / 1920x1080 8-sub-frame blur.
-Output is `<out>/video.mp4`, or `part-01.mp4 ...` for a video over 30 s (equal parts, cuts on pauses, one continuous timeline), plus `parts.json` and `report.json`. It never uploads.
+Output is `<out>/video.mp4` (or `part-01.mp4 ...` for a video over 30 s), auto-generated `sheet*.jpg` contact sheets (unless `--no-sheet`), `parts.json`, and `report.json`. It never uploads.
 It gives: toon shading with an inverted-hull ink outline, **prebuilt rigged characters (`objects/`, see section 11)**, the word-anchored beat camera
 (`lib/rig.js`: moving beats for 9:16, `calm()` cuts and zooms for 16:9), per-format captions, chunked resumable rendering (stale frames are wiped automatically when the scene, transcript, settings or renderer change), ffmpeg encode (always 1080x1920 or 1920x1080) and QA. Objects follow one
 contract: `makeX(opts) -> {group, parts, update(t)}`, metres, origin at ground contact, facing +z, pure function of t.
@@ -182,8 +182,8 @@ In the video-shelf workflow **no voice-over is made** (the owner records it): sk
   brands or logos (production.md).
 
 ## 10. Route A details (offline pipeline)
-- Preflight: `python3 pipeline/doctor.py` (checks node, ffmpeg+libx264, vendored three, playwright module, numpy, and a real
-  WebGL2 render, with the exact fix for anything missing). Missing Playwright: `npm i playwright-core` (Chrome/headless
+- Preflight: `python3 pipeline/doctor.py` (works from any folder; checks node, ffmpeg+libx264, vendored three, playwright module, numpy, and a real
+  WebGL2 render, with the exact fix for anything missing). Missing Playwright: `bun add -d playwright-core` if `bun.lock` exists, else `npm i -D playwright-core` (Chrome/headless
   shell is auto-found in /ms-playwright, /opt/pw-browsers, ~/.cache/ms-playwright, or set `CHROME_PATH`).
 - `vendor/` = three@0.186.1: original `.tgz`, unpacked ES build, addons (see `vendor/README.md`). Import through the
   importmap in `pipeline/page.html`; never download three.
@@ -192,10 +192,11 @@ In the video-shelf workflow **no voice-over is made** (the owner records it): sk
   `makeRig(calm(beats), {drift:0, arc:0})` for 16:9 (see `scenes/char_demo.js`). Beat fovs are written for 9:16; `applyPose` divides them by 1.4 in a
   landscape frame (`{exact:true}` to opt out). A beat can be `{cut:true}` (hard cut on its word) and carry `zoom: 0.06-0.14`.
   `--transcript` overrides captions from word timestamps (`0.112 - 0.176  If` lines; `[a --> b] w`, `a b w`, `w,a,b`, `hh:mm:ss.mmm - ... w` and JSON lists also work).
+- Preview & sheet flags: `--beatcheck` (renders ~16-20 key beat/timeline frames into `beatcheck.jpg` in seconds for fast pre-render QA); `--no-sheet` skips auto-generating `sheet*.jpg` after full renders.
 - Caption options: `--caps word|sentence|0`, `--capscale 1`, `--accent '#ffd23f'`. Parts: `--part-seconds 30`. Optional SFX/music stem: `--audio` (no voice). `--fresh` forces a re-render.
 - Resource limits (2 vCPU, 4 GB): `--jobs 1` (2 only if RAM is free), chunks of 120 frames, re-run to resume. If a shader
   fails to compile the renderer stops with FATAL (three.js otherwise skips the object silently).
-- Known limits: ink only on silhouettes; QA scripts need numpy (skipped with a note if missing); `analyze_pacing.py` undercounts
+- Known limits: ink only on silhouettes; QA scripts need numpy (skipped cleanly with `--no-qa` or note if missing); `analyze_pacing.py` undercounts
   small moves on flat backgrounds, so plan ~10% extra beats.
 
 ## 11. Prebuilt characters (`objects/`): use them, do not rebuild them

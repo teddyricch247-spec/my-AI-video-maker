@@ -1,9 +1,9 @@
 # AGENTS.md
 
 Rules for any AI agent working in this repo (Google AI Studio, Claude, anything else).
-This repo is a **video shelf**. You make 3D cartoon videos (9:16 Shorts and 16:9 YouTube long form) with the skill in `skill/inkbeat-shorts`. You render first; you upload them to Supabase only when the owner asks, and the website (`app/`) lists what is uploaded so the owner can play and download it.
+This repo is a **video shelf**. You make 3D cartoon videos (9:16 Shorts and 16:9 YouTube long form) with the skill in `skill/inkbeat-shorts`. You render local drafts first (which appear in the Next.js **Draft previews** section for review); you upload them to Supabase only when the owner asks (or taps **Save to shelf** in the web UI), and the website (`app/`) lists both local drafts and saved Supabase clips.
 
-The owner works from a phone. Keep your replies short. End a render with the file location and "not saved yet"; end a save with the links.
+The owner works from a phone. Keep your replies short. End a draft render with the **Next.js Preview link** (plus render speed and "not saved to Supabase yet"); end a save with the **Watch** links.
 
 ## Read first
 
@@ -28,23 +28,20 @@ The shelf is wired to a real Supabase project. Nothing to configure and no secre
 
 Playwright is the only missing piece. Chromium and ffmpeg are already installed. Do not download another browser.
 
-From the repo root, install the dependencies and add Playwright if `package.json` doesn't list it yet:
+From the workspace root (note: if `inkbeat-video-shelf/` lives inside a parent repo with `bun.lock`, use `bun` at the outer root instead of `npm` so lockfiles stay consistent):
 
 ```bash
-npm install
-npm i -D playwright-core      # only if "playwright-core" is not in package.json
+npm install                   # or bun install if bun.lock exists
+npm i -D playwright-core      # or: bun add -d playwright-core   (only if missing)
 ```
 
-Then run the preflight check from the skill folder:
+Then run the preflight check (works from any folder by path):
 
 ```bash
-cd skill/inkbeat-shorts
-python3 pipeline/doctor.py
+python3 skill/inkbeat-shorts/pipeline/doctor.py
 ```
 
-The skill's scripts find Playwright by looking in every parent folder's `node_modules`, so the repo root install is picked up. Installing it at the root (and saving it) also stops a later `npm install` from removing it. If you can't install locally, `npm i -g playwright-core` works too.
-
-Fix any FAIL and run the doctor again until it passes. A numpy WARN is fine (it only affects optional QA).
+The skill's scripts find Playwright by looking in every parent folder's `node_modules`, so a root install is picked up automatically. Fix any FAIL and run the doctor again until it passes. A numpy WARN is fine (it only affects optional QA; pass `--no-qa` if numpy is missing).
 
 Check the Supabase connection from the repo root (safe to run again):
 
@@ -61,17 +58,20 @@ The owner sends a **word-timestamp transcript** (one word per line, `0.112 - 0.1
 1. **Format.** 9:16 (Shorts) unless the owner says YouTube, long form, landscape or 16:9, or asks for both. Both = render each, same scene, `--aspect 9:16` and `--aspect 16:9`.
 2. **Reference photos.** Look at them yourself and use them as a brief: colours, outfits and hair for the characters, the place, props, mood. Never copy a real person's likeness or any brand or logo. If a photo shows a person, make a cartoon character with similar clothes and colours only.
 3. **Scene.** Write `skill/inkbeat-shorts/pipeline/scenes/<slug>.js` for the story, anchored to the transcript word times, from the ready-made characters and props in `objects/`. One scene file serves both formats: use `ctx.landscape` (see `scenes/char_demo.js`).
-4. **Render immediately**, as a `draft`. This only renders. **It does not save anything to Supabase.**
-5. Reply with where the file is, the seconds per frame, and "not saved to the shelf yet, say save to put it there". Stop.
+4. **Fast visual check (`--beatcheck`), then render `draft`.** Run `--beatcheck` first to generate `beatcheck.jpg` (~16–20 keyframes in seconds) and fix any clipping or framing issues before rendering the full timeline. Full `draft` rendering writes only locally to `.renders/<slug>` (**it does not upload anything to Supabase**), and Next.js automatically surfaces it under **Draft previews**.
+5. Reply with the **Next.js Preview link** (the live dev app URL `#drafts`), the local file paths, `s/frame`, and `"not saved to the shelf yet — review it in the preview, tap Save to shelf there, or say save"`. Stop.
 
 ## Making a video
 
-Always run from `skill/inkbeat-shorts`. Write renders to `.renders/<slug>` at the repo root (gitignored, survives between messages), as an absolute path.
+Write renders into `.renders/<slug>` inside `inkbeat-video-shelf/` (gitignored, survives between messages). If running from a parent repo, pass the full paths instead of using `cd`:
 
 ```bash
-cd skill/inkbeat-shorts
-python3 pipeline/make_video.py --scene <scene> --transcript /path/words.txt --mode draft --out <repo>/.renders/<slug> --no-qa
-python3 pipeline/make_video.py --scene <scene> --transcript /path/words.txt --aspect 16:9 --mode draft --out <repo>/.renders/<slug>-yt --no-qa
+# 1. Fast keyframe check (~3-5s): renders beatcheck.jpg to catch framing/clipping early
+python3 skill/inkbeat-shorts/pipeline/make_video.py --scene <scene> --transcript .renders/<slug>/words.txt --beatcheck --out .renders/<slug>
+
+# 2. Full draft render (also auto-generates sheet-*.jpg contact sheets unless --no-sheet)
+python3 skill/inkbeat-shorts/pipeline/make_video.py --scene <scene> --transcript .renders/<slug>/words.txt --mode draft --out .renders/<slug> --no-qa
+python3 skill/inkbeat-shorts/pipeline/make_video.py --scene <scene> --transcript .renders/<slug>/words.txt --aspect 16:9 --mode draft --out .renders/<slug>-yt --no-qa
 ```
 
 - **Start with `--mode draft`.** Use `fast` or `final` only when the owner asks. This sandbox renders on 2 CPUs with no GPU: about 0.1 s per frame in `draft`, 0.2 in `fast`, 1 in `final`. A 30 second clip is 900 frames.
@@ -84,11 +84,11 @@ python3 pipeline/make_video.py --scene <scene> --transcript /path/words.txt --as
 - Scenes that exist: `beats_test`, `char_demo`, `char_preview`, `tree_road`.
 - A new story needs a new scene file in `skill/inkbeat-shorts/pipeline/scenes/`. Build it from the ready-made characters and props in `objects/`. Do not redraw them, and do not edit other skill files unless the owner asks.
 
-## Saving to the shelf (ONLY when the owner asks)
+## Saving to the shelf (ONLY when the owner asks, or via the web UI)
 
-**Never upload on your own.** Rendering and saving are separate. Upload only when the owner says to save, upload, publish or put it on the shelf. A render that is not saved just stays in `.renders/<slug>`.
+**Never upload on your own.** Rendering and saving are separate. Upload only when the owner says to save, upload, publish or put it on the shelf (or taps **Save to shelf** directly in the Next.js **Draft previews** UI). A render that is not saved just stays in `.renders/<slug>`.
 
-1. From the repo root, give the render folder (all parts go up in order) or one mp4:
+1. From the `inkbeat-video-shelf` root, give the render folder (all parts go up in order) or one mp4:
 
    ```bash
    node scripts/upload.mjs .renders/<slug> <name>
@@ -97,7 +97,7 @@ python3 pipeline/make_video.py --scene <scene> --transcript /path/words.txt --as
 
    Add `--dry-run` first if you want to preview the names and sizes.
 
-2. **Size rule.** Supabase's free tier rejects any file over 50 MB. Any file over 45 MB is re-encoded automatically by the script (libx264, CRF 23, same resolution, audio copied untouched), a little lower quality that is only visible on very fine detail. Do not shrink by hand.
+2. **Size rule.** Supabase's free tier rejects any file over 50 MB. Any file over 45 MB is re-encoded automatically (libx264, CRF 23, same resolution, audio copied untouched) in both `scripts/upload.mjs` and the web UI Save handler. Do not shrink by hand.
 
 3. Names: `<name>.mp4`, or `<name>-part-01.mp4`, `-part-02.mp4` ... for several parts. 16:9 files get `-16x9` added so the website shows them landscape. It prints a `Watch:` and `Download:` link for each.
 
@@ -119,7 +119,7 @@ Delete only what the owner names. For `--all`, only when they say so.
 
 ## Do not
 
-- Do not commit videos, frames, `node_modules`, `.env` files, or anything from `out/`.
+- Do not commit videos, frames, `node_modules`, `.env` files, or anything from `out/` or `.renders/`.
 - Do not install Remotion or use `skill/inkbeat-shorts/templates/`. That route needs a GPU.
-- Do not change the site's look unless asked.
-- Do not overwrite a starter app that is already in the repo. Keep a single `package.json` and a single `app/` folder. If the repo already has its own, merge: the shelf page in `app/page.js`, the helper in `lib/supabase.js`, and the font in `public/fonts/` are the parts that matter.
+- Preserve the shelf's comic ink-and-paper aesthetic and mobile-first layout; do not break saved Supabase clip playback.
+- Do not overwrite a starter app that is already in the repo. Keep a single `package.json` and a single `app/` folder. If the repo already has its own, merge: the shelf page in `app/page.js`, helpers in `lib/`, and the font in `public/fonts/` are the parts that matter.

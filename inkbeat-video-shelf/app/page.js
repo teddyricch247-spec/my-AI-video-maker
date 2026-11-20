@@ -1,6 +1,8 @@
 import { listVideos } from '../lib/supabase';
+import { listDrafts } from '../lib/drafts';
+import DraftShelf from './components/DraftShelf';
 
-// Always read the live bucket, never a cached copy.
+// Always read the live bucket and local drafts, never a cached copy.
 export const dynamic = 'force-dynamic';
 
 function megabytes(bytes) {
@@ -51,38 +53,60 @@ function Problem({ problem, bucket, status }) {
 }
 
 export default async function Page() {
-  const { videos, problem, bucket, status } = await listVideos();
+  const [{ videos, problem, bucket, status }, drafts] = await Promise.all([listVideos(), Promise.resolve(listDrafts())]);
 
   return (
     <main className="page">
       <header>
         <h1>Shorts shelf</h1>
-        <p className="lede">Tap a clip to play it. Download saves the file to your phone. Wide clips are 16:9 for YouTube.</p>
+        <p className="lede">Tap a clip to play it. Review local drafts before saving to the shelf, or download straight to your phone.</p>
         {!problem && (
-          <p className="count">{videos.length === 1 ? '1 clip' : `${videos.length} clips`}</p>
+          <p className="count nums">
+            {[
+              drafts.length > 0 ? (drafts.length === 1 ? '1 draft' : `${drafts.length} drafts`) : null,
+              videos.length === 1 ? '1 saved clip' : `${videos.length} saved clips`,
+            ]
+              .filter(Boolean)
+              .join(' · ')}
+          </p>
         )}
       </header>
 
-      {problem && <Problem problem={problem} bucket={bucket} status={status} />}
+      <DraftShelf initialDrafts={drafts} />
 
-      {!problem && videos.length === 0 && (
-        <Notice tone="empty" title="No clips yet">
-          <p>Ask the agent to render a Short and upload it. It shows up here on the next reload.</p>
-        </Notice>
-      )}
+      <section className="saved-section" aria-labelledby="saved-heading">
+        {drafts.length > 0 && (
+          <div className="section-head">
+            <h2 id="saved-heading">Saved shelf clips</h2>
+            <p className="meta nums">{videos.length === 1 ? '1 clip' : `${videos.length} clips`} on Supabase</p>
+          </div>
+        )}
 
-      {videos.length > 0 && (
-        <ul className="grid">
-          {videos.map((v) => (
-            <li className={v.wide ? 'clip wide' : 'clip'} key={v.name}>
-              <video src={`${v.src}#t=0.1`} aria-label={v.title} controls playsInline preload="metadata" />
-              <h2>{v.title}</h2>
-              <p className="meta">{[megabytes(v.size), day(v.created)].filter(Boolean).join(', ')}</p>
-              <a className="save" href={v.download}>Download</a>
-            </li>
-          ))}
-        </ul>
-      )}
+        {problem && <Problem problem={problem} bucket={bucket} status={status} />}
+
+        {!problem && videos.length === 0 && (
+          <Notice tone="empty" title={drafts.length > 0 ? 'Nothing saved to Supabase yet' : 'No clips yet'}>
+            <p>
+              {drafts.length > 0
+                ? 'Tap Save to shelf on a draft above, or ask the agent to save it.'
+                : 'Ask the agent to render a Short and upload it. It shows up here on the next reload.'}
+            </p>
+          </Notice>
+        )}
+
+        {videos.length > 0 && (
+          <ul className="grid">
+            {videos.map((v) => (
+              <li className={v.wide ? 'clip wide' : 'clip'} key={v.name}>
+                <video src={`${v.src}#t=0.1`} aria-label={v.title} controls playsInline preload="metadata" />
+                <h2>{v.title}</h2>
+                <p className="meta nums">{[megabytes(v.size), day(v.created)].filter(Boolean).join(' · ')}</p>
+                <a className="save" href={v.download}>Download</a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </main>
   );
 }

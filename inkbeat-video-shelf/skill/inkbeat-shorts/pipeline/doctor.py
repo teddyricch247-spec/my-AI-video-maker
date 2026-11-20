@@ -13,12 +13,22 @@ ff = shutil.which("ffmpeg"); line(ff, "ffmpeg", (out(["ffmpeg", "-version"]).spl
 line(shutil.which("ffprobe"), "ffprobe (used when saving, to tag 16:9 files)", "", "optional")
 if ff: line("libx264" in out(["ffmpeg", "-hide_banner", "-encoders"]), "ffmpeg libx264", "", "use an ffmpeg build with libx264")
 line(os.path.exists(os.path.join(HERE, "..", "vendor", "three", "three.module.js")), "vendored three.js", "no network needed", "re-copy vendor/ from the skill zip")
+def find_bun_root():
+    d = os.path.abspath(HERE)
+    for _ in range(6):
+        if os.path.exists(os.path.join(d, "bun.lock")) or os.path.exists(os.path.join(d, "bun.lockb")):
+            return d
+        p = os.path.dirname(d)
+        if p == d: break
+        d = p
+    return None
 if node:
-    r = subprocess.run([node, "-e", "try{require('playwright')}catch(e){try{require('playwright-core')}catch(e2){process.exit(1)}}"], capture_output=True)
+    r = subprocess.run([node, "-e", "try{require('playwright')}catch(e){try{require('playwright-core')}catch(e2){process.exit(1)}}"], capture_output=True, cwd=HERE)
     glob = out(["npm", "root", "-g"]); has = r.returncode == 0 or (glob and any(os.path.isdir(os.path.join(glob, m)) for m in ("playwright", "playwright-core")))
-    line(has or os.path.isdir("/opt/npm-tools/node_modules/playwright"), "playwright module", "", "npm i playwright-core   (run in the skill folder)")
+    pw_fix = "bun add -d playwright-core   (run at workspace root)" if find_bun_root() and shutil.which("bun") else "npm i -D playwright-core   (run at repo root)"
+    line(has or os.path.isdir("/opt/npm-tools/node_modules/playwright"), "playwright module", "", pw_fix)
 try: import numpy; line(True, "numpy", numpy.__version__)
-except ImportError: line(False, "numpy (only for QA scripts)", "", "optional")
+except ImportError: line(False, "numpy (optional; only for QA scripts)", "", "optional")
 if node:
     tmp = tempfile.mkdtemp(); t = time.time()
     r = subprocess.run([node, "render.js", "--scene", "beats_test", "--frames", "0-1", "--out", tmp], capture_output=True, text=True, cwd=HERE, timeout=180)

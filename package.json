@@ -12,5 +12,8 @@
     "lint": "npm run lint --workspace=inkbeat-video-shelf",
     "bucket": "npm run bucket --workspace=inkbeat-video-shelf",
     "list": "npm run list --workspace=inkbeat-video-shelf"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.65.1"
   }
 }
