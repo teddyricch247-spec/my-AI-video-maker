@@ -1,13 +1,13 @@
-// Server-only helper. Reads the bucket list. Env vars override config/shelf.json.
+// Server-only helper. Reads the bucket list directly from config/shelf.json.
 import shelf from '../config/shelf.json';
 
 const VIDEO = /\.(mp4|webm|mov)$/i;
 
 function config() {
   return {
-    url: (process.env.SUPABASE_URL || shelf.url || '').replace(/\/+$/, ''),
-    key: process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || shelf.publishableKey || '',
-    bucket: process.env.SUPABASE_BUCKET || shelf.bucket || 'videos',
+    url: (shelf.url || '').replace(/\/+$/, ''),
+    key: shelf.publishableKey || '',
+    bucket: shelf.bucket || 'videos',
   };
 }
 

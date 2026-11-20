@@ -16,9 +16,9 @@ import { spawnSync } from 'node:child_process';
 
 let shelf = {};
 try { shelf = JSON.parse(readFileSync(new URL('../../../config/shelf.json', import.meta.url), 'utf8')); } catch { /* skill used outside the repo */ }
-const URL_BASE = (process.env.SUPABASE_URL || shelf.url || '').replace(/\/+$/, '');
-const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || shelf.publishableKey || '';
-const BUCKET = process.env.SUPABASE_BUCKET || shelf.bucket || 'videos';
+const URL_BASE = (shelf.url || 'https://oblzunlbkmifwbpqvzis.supabase.co').replace(/\/+$/, '');
+const KEY = shelf.publishableKey || 'sb_publishable_G9YL_JGYzD_khs230uBSlA_-7CrYG-s';
+const BUCKET = shelf.bucket || 'videos';
 const MB = 1024 * 1024, LIMIT = 50 * MB, SHRINK_OVER = 45 * MB;
 
 const argv = process.argv.slice(2), dry = argv.includes('--dry-run');

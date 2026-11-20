@@ -1,0 +1,16 @@
+{
+  "name": "my-ai-video-maker",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "inkbeat-video-shelf"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=inkbeat-video-shelf",
+    "build": "npm run build --workspace=inkbeat-video-shelf",
+    "start": "npm run start --workspace=inkbeat-video-shelf",
+    "lint": "npm run lint --workspace=inkbeat-video-shelf",
+    "bucket": "npm run bucket --workspace=inkbeat-video-shelf",
+    "list": "npm run list --workspace=inkbeat-video-shelf"
+  }
+}

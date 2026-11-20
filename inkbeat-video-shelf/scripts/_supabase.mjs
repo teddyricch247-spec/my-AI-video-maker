@@ -1,21 +1,18 @@
 // Shared helper for the scripts in this folder. Node 20.12+ (uses global fetch).
-// Defaults come from config/shelf.json (the real project). Env vars or .env.local override them.
+// Reads config/shelf.json directly.
 import { readFileSync } from 'node:fs';
-for (const f of ['.env.local', '.env']) {
-  try { process.loadEnvFile(f); } catch { /* file not there, fine */ }
-}
 
 let shelf = {};
 try { shelf = JSON.parse(readFileSync(new URL('../config/shelf.json', import.meta.url), 'utf8')); } catch { /* no config file */ }
 
-export const URL_BASE = (process.env.SUPABASE_URL || shelf.url || '').replace(/\/+$/, '');
-const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY || shelf.publishableKey || '';
-export const BUCKET = process.env.SUPABASE_BUCKET || shelf.bucket || 'videos';
+export const URL_BASE = (shelf.url || '').replace(/\/+$/, '');
+const KEY = shelf.publishableKey || '';
+export const BUCKET = shelf.bucket || 'videos';
 export const MAX_BYTES = 50 * 1024 * 1024; // Supabase free tier per-file limit
 
 export function requireEnv() {
   if (!URL_BASE || !KEY) {
-    console.error('No Supabase URL or key. Check config/shelf.json (or set SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY).');
+    console.error('No Supabase URL or key. Check config/shelf.json.');
     process.exit(1);
   }
 }

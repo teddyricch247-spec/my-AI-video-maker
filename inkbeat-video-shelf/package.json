@@ -7,6 +7,7 @@
     "dev": "next dev -p 3000 -H 0.0.0.0",
     "build": "next build",
     "start": "next start -p 3000 -H 0.0.0.0",
+    "lint": "node --check lib/supabase.js",
     "bucket": "node scripts/setup-bucket.mjs",
     "list": "node scripts/list.mjs"
   },
