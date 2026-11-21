@@ -9,7 +9,7 @@ description: Toon-shaded 3D cartoon videos in 9:16 (Shorts) and 16:9 (YouTube lo
 1. **Both formats.** 9:16 for Shorts (default) and 16:9 for YouTube long form: `--aspect 9:16|16:9`. One scene file frames both through `ctx.landscape`.
 2. **Start at once.** The input is a transcript with a timestamp on every word, plus reference photos and/or a prompt. Do not ask for approval at gates; state your defaults in one line, run a fast `--beatcheck` first to verify framing/clipping in `beatcheck.jpg`, then render a `draft` immediately.
 3. **Render is not save — reply with the right link.** Rendering writes locally (surfacing automatically in the Next.js **Draft previews** section) and never uploads on its own. After a draft render, reply with the **Next.js Preview link** (`#drafts` on the dev app URL), `s/frame`, and `"not saved to the shelf yet"`. Upload to Supabase only when the owner asks (via `scripts/upload.mjs` or the web **Save to shelf** button), and reply with the ordered **Watch:** links, mode, `s/frame`, and file sizes.
-4. **No voice-over, ever.** The owner records it in their own editor. No TTS. Captions only; sound effects as in section 8 are fine (optional `--audio` stem, no voice).
+4. **No voice-over and NO music, ever.** The owner records voice-over in their own editor and does not want music beds. No TTS, no music. Captions + **sound effects (SFX) only** via optional `--audio` stem.
 5. **Captions by format.** 9:16: 1-2 words popping on each word, large. 16:9: the full sentence, small, bottom centre, only the spoken word lit.
 6. **Long videos come in parts.** Over 30 s the render is cut into equal parts (cuts on pauses) that stitch seamlessly in an editor.
 7. **Size.** Supabase's free tier rejects files over 50 MB, so a file over 45 MB is re-encoded when saved (libx264, CRF 23, same resolution, audio untouched).
@@ -58,9 +58,7 @@ private analysis only (measure light, colour, pacing; never copy characters or d
 
 ## 1. Two grammars: pick the right one
 **Shorts (vertical), the viral 3D cartoon cadence** (measured on a sample of popular 3D cartoon Shorts):
-- **There are no cuts, there are camera beats.** About **56 beats/min** (range 45–66), a new framing every ~0.86 s,
-  hard cuts ≈ 0 per video. The move *is* the transition: dolly, orbit, crane, whip, push-through, dissolve for time
-  jumps.
+- **Camera beats & cuts:** About **56 beats/min** (range 45–66), a new framing every ~0.86 s. Use moving beats (`dolly`, `orbit`, `crane`) within a scene, and use **clean hard cuts (`{ cut: true }`)** freely whenever jumping to a completely different camera framing or another set/location.
 - **The camera is never still:** ~5% still frames, ~34% fast-motion frames. Between moves the camera keeps drifting at
   about a third of peak speed. Moves last ~19 frames with a symmetric ease-in-out and start ~6 frames before their
   word.
@@ -154,7 +152,7 @@ Hunt the next one with `scripts/flicker.py`, then crop the region over 3 frames 
 
 ## 7. Shorts specifics (more in shorts.md)
 - **Captions (9:16 only; 16:9 uses small full-sentence captions, section 1):** 1–2 lowercase words, swapped exactly on word onsets (2 frames early), no pop or scale, centered at
-  **70% height**, a heavy geometric sans, **≥ 90 px at 1080 wide**, a heavy dark outline, every word white (an accent
+  **70% height**, a heavy geometric sans, **~86 px at 1080 wide** (kept compact so it never crowds the frame), a heavy dark outline, every word white (an accent
   color is optional). Spoken punctuation kept.
 - **Sound-off readability:** viewers scroll muted. Put the story in the picture with 1–3 word tags painted on the key
   objects (a year, a price, a label), bold, large, high contrast, **unlit** so the light can't wash them out.
@@ -163,12 +161,9 @@ Hunt the next one with `scripts/flicker.py`, then crop the region over 3 frames 
 - The picture ends ~0.7 s after the last word.
 
 ## 8. Audio (more in audio-and-voice.md)
-In the video-shelf workflow **no voice-over is made** (the owner records it): skip everything about TTS and the voice loudness master below, and only add story SFX and an optional music bed as one stem (`--audio`, no voice). The levels below are relative to a voice that will be added later, so keep SFX modest.
-- Music bed ~14 dB under the speech (long-form edits ~20+ dB), a −3 dB duck under the voice, faded at the end.
-- Story SFX on the exact word, 6–8 per 20 s, **each leveled against the voice** (peak ~8 dB under the voice peak, the
-  loudest 100 ms ≥ 6 dB under the speech RMS); one global SFX gain lets transients and sustained tones jump out.
-- Two-pass loudnorm to −14 LUFS, −1 dBTP. Never overlap-crossfade cut VO segments (it shortens audio, captions drift).
-- Check licenses of every music track you ship; a library track can still draw a content claim.
+In the video-shelf workflow **no voice-over AND no music are ever made**: skip everything about TTS, voice loudness, and music beds. When audio is requested (`--audio`), generate **sound effects (SFX) only** — never add music. Keep SFX levels modest so they sit cleanly under the voice-over the owner adds later:
+- Story SFX on the exact word/action, 6–10 per 20 s, **each leveled modestly** (peaks around −16 to −10 dBFS, well under a −14 LUFS voice; short fades at both ends, 48 kHz).
+- Deterministic synthesized SFX (no music loops or melodic beds) are great for offline renders.
 
 ## 9. Production habits that saved the most time
 - A contract file + plan JSON per sequence + one owner per area (core, sets, cast, sequences, UI, audio).
@@ -193,7 +188,7 @@ In the video-shelf workflow **no voice-over is made** (the owner records it): sk
   landscape frame (`{exact:true}` to opt out). A beat can be `{cut:true}` (hard cut on its word) and carry `zoom: 0.06-0.14`.
   `--transcript` overrides captions from word timestamps (`0.112 - 0.176  If` lines; `[a --> b] w`, `a b w`, `w,a,b`, `hh:mm:ss.mmm - ... w` and JSON lists also work).
 - Preview & sheet flags: `--beatcheck` (renders ~16-20 key beat/timeline frames into `beatcheck.jpg` in seconds for fast pre-render QA); `--no-sheet` skips auto-generating `sheet*.jpg` after full renders.
-- Caption options: `--caps word|sentence|0`, `--capscale 1`, `--accent '#ffd23f'`. Parts: `--part-seconds 30`. Optional SFX/music stem: `--audio` (no voice). `--fresh` forces a re-render.
+- Caption options: `--caps word|sentence|0`, `--capscale 1`, `--accent '#ffd23f'`. Parts: `--part-seconds 30`. Optional **SFX-only** stem: `--audio` (no voice, no music). `--fresh` forces a re-render.
 - Resource limits (2 vCPU, 4 GB): `--jobs 1` (2 only if RAM is free), chunks of 120 frames, re-run to resume. If a shader
   fails to compile the renderer stops with FATAL (three.js otherwise skips the object silently).
 - Known limits: ink only on silhouettes; QA scripts need numpy (skipped cleanly with `--no-qa` or note if missing); `analyze_pacing.py` undercounts

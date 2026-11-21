@@ -13,7 +13,7 @@ What the formats do:
 - **9:16:** 1-2 word captions on each word, moving beat camera (about 56 beats/min).
 - **16:9:** small full-sentence captions at the bottom, only the spoken word lit, calm camera (hard cuts on the word, a few slow zooms, `calm()` in `pipeline/lib/rig.js`).
 - **Long videos** are cut into equal parts of at most 30 s on pauses between words; the parts are one continuous timeline and stitch seamlessly in an editor.
-- **No voice-over is ever made.** The owner records it. Captions only; `--audio` takes an optional SFX/music stem (no voice).
+- **No voice-over and NO music are ever made.** The owner records the voice-over; `--audio` takes an optional **SFX-only** stem (sound effects only, never music).
 
 Characters: import the prebuilt cast from `objects/` (see `objects/README.md`, previews in `objects/previews/`, example `pipeline/scenes/char_demo.js`). Check with `node objects/selftest.js`.
 

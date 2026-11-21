@@ -23,7 +23,7 @@ Design notes that worked:
 ## Captions (burned in)
 - 1–2 words per chunk (2 when both are short, ≤ 4–5 letters, and not across a sentence end), **lowercase as spoken**,
   punctuation kept, swapped instantly on each chunk's onset, shown **2 frames early**, held until the next onset.
-- Font: a heavy geometric sans (ExtraBold/Black), **≥ 90 px at 1080 wide** (92 px by default), a heavy dark stroke
+- Font: a heavy geometric sans (ExtraBold/Black), **~86 px at 1080 wide** by default (compact so it stays crisp above the bottom third), a heavy dark stroke
   (paint-order stroke then fill), a soft drop shadow, centered horizontally at **70% of the frame height** (y ≈ 1344
   px at 1080×1920).
 - **All words white.** An accent color is optional; if you use one, accent at most one key word per sentence, never

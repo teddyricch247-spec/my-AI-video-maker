@@ -31,7 +31,7 @@ const FONT=px=>`800 ${px}px Poppins`;
 // 9:16 Shorts style: 1-2 words, swapped on word onsets (2 frames early), no pop, heavy outline, all white.
 function drawWord(t){
   let cur=null; for(const [wt,txt] of wordCaps) if(t>=wt-2/FPS) cur=txt; if(!cur) return;
-  const px=Math.round((LAND?0.085*H:124*W/1080)*CAPSCALE), y=H*(LAND?0.8:0.7);
+  const px=Math.round((LAND?0.060*H:86*W/1080)*CAPSCALE), y=H*(LAND?0.8:0.7);
   o.font=FONT(px); o.textAlign='center'; o.textBaseline='middle'; o.lineJoin='round';
   o.lineWidth=px*0.21; o.strokeStyle=INKCOL; o.strokeText(cur,W/2,y); o.fillStyle='#fff'; o.fillText(cur,W/2,y); }
 

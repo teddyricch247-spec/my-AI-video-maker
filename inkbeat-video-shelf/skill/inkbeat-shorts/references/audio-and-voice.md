@@ -1,6 +1,5 @@
-> **Video-shelf workflow: no voice-over is made.** The owner records the voice in their own editor and supplies a transcript with a timestamp on every word.
-> Skip the whole "Voice-over" section below (no TTS, no voices, no pronunciation passes, no loudness master of a voice). SFX and a music bed are optional,
-> delivered as one stem with `--audio` (no voice in it). The levels below are relative to a voice added later, so keep effects modest.
+> **Video-shelf workflow: NO voice-over and NO music are ever made.** The owner records the voice in their own editor and supplies a transcript with a timestamp on every word.
+> Skip the "Voice-over" and "Music" sections below (no TTS, no voices, **NEVER add music**). When audio is requested, deliver **sound effects (SFX) only** via `--audio` (no voice, no music bed). Keep SFX peaks modest relative to a voice added later.
 
 # Audio and voice-over
 
@@ -23,17 +22,8 @@
 - Keep TTS keys outside the Remotion project folder (not in its `.env`): Remotion loads that file into the render
   browser.
 
-## Music
-- One continuous bed per piece, starting at a sensible offset, about **14 dB under the speech** for Shorts (long-form
-  edits ~20+ dB), a −3 dB duck while the voice speaks (fast attack, slow release), a 0.6 s fade at the end.
-- Pick by measurement if you can't listen (length, steady level, no silent intro) and say so. Check the license of
-  every track; even a licensed library track can draw an automated content claim.
-- **Use only music you hold a license for**, from a library whose tracks have not drawn claims on your channel; if one
-  does, drop that library.
-- Blind picks are a gamble: start from beds the user has already accepted and offer alternatives as short previews.
-  Match the bed's mood to the story (a serious story wants a serious bed, not generic chill).
-- **A signature transition sound is identical every time:** one file, one level, one offset relative to the signature
-  frame, defined in one shared place.
+## Music — NEVER ADD MUSIC
+- **Do NOT add music.** When the user asks for audio/sound in the video-shelf workflow, they mean **sound effects (SFX) only** — never generate or mix a background music bed, melodic loop, or soundtrack.
 
 ## SFX
 - Story SFX only, on the exact word (6–8 per 20 s): a door, a pop, an impact, a click on a number, a thud, ticking. No

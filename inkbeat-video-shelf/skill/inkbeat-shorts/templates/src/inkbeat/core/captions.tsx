@@ -1,6 +1,6 @@
 // Burned-in Shorts captions: 1–2 lowercase words per chunk (2 when both are short and not across a sentence end),
 // swapped instantly on each chunk's onset, shown 2 frames early, held until the next onset; spoken punctuation kept.
-// A heavy geometric sans (Poppins ExtraBold) 92 px at 1080 wide, a heavy dark stroke drawn under the fill, a soft
+// A heavy geometric sans (Poppins ExtraBold) 66 px at 1080 wide, a heavy dark stroke drawn under the fill, a soft
 // shadow, centered at 70% of the frame height. Every word is white by default. An accent color is optional: pass
 // `accentColor` and the few key words in `accent` (at most one per chunk, about one per sentence).
 import React from "react";
@@ -48,7 +48,7 @@ export const Captions: React.FC<{
         const key = !used && accent.has(norm(w));
         if (key) used = true;
         return (
-          <span key={i} style={{ fontFamily: "Poppins", fontWeight: 800, fontSize: 92 * k, lineHeight: 1, color: key ? accentColor : "#ffffff", WebkitTextStroke: `${14 * k}px #120a10`, paintOrder: "stroke fill", textShadow: `0 ${8 * k}px ${18 * k}px rgba(0,0,0,0.55)` }}>
+          <span key={i} style={{ fontFamily: "Poppins", fontWeight: 800, fontSize: 66 * k, lineHeight: 1, color: key ? accentColor : "#ffffff", WebkitTextStroke: `${10 * k}px #120a10`, paintOrder: "stroke fill", textShadow: `0 ${6 * k}px ${14 * k}px rgba(0,0,0,0.55)` }}>
             {w}
           </span>
         );
