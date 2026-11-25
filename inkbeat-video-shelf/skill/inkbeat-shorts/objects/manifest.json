@@ -1,0 +1,190 @@
+{
+  "version": 1,
+  "contract": "makeX(opts) -> { group, parts, update(t), meta }. Metres, origin = ground contact centre, faces +z, every pose a pure function of t, toon materials + ink only.",
+  "objects": [
+    {
+      "name": "character",
+      "tier": 1,
+      "file": "objects/character.js",
+      "factory": "makeCharacter(opts) | makeCast(name, extra) | makeSam | makeAda | makeKid | makeElder",
+      "cast": [
+        "sam",
+        "ada",
+        "kid",
+        "elder"
+      ],
+      "size_m": {
+        "sam": 1.79,
+        "ada": 1.84,
+        "kid": "~1.45",
+        "elder": "~1.7",
+        "note": "includes hair; body height (soles to skull top) is opts.height, default 1.65"
+      },
+      "parts": [
+        "root",
+        "hips",
+        "spine",
+        "chest",
+        "neck",
+        "head",
+        "shoulderL/R",
+        "elbowL/R",
+        "handL/R",
+        "hipL/R",
+        "kneeL/R",
+        "footL/R",
+        "torso",
+        "thighL/R",
+        "shinL/R",
+        "upperArmL/R",
+        "forearmL/R",
+        "palmL/R",
+        "shoeL/R",
+        "skull",
+        "face",
+        "hair",
+        "nose"
+      ],
+      "sockets": [
+        "HandR",
+        "HandL",
+        "Head",
+        "Back"
+      ],
+      "acts": [
+        "idle",
+        "walk",
+        "run",
+        "wave",
+        "point",
+        "talk",
+        "react",
+        "sit",
+        "plant",
+        "hold",
+        "dig"
+      ],
+      "expressions": [
+        "neutral",
+        "happy",
+        "shocked",
+        "sad",
+        "angry",
+        "worried"
+      ],
+      "api": [
+        "act(weights,t)",
+        "update(t)",
+        "setActs(w)",
+        "speed(kind,rate)",
+        "expression(nameOrFn)",
+        "talk(fn)",
+        "talkFromWords(words)",
+        "lookAt(p)",
+        "reach(side,p,w)",
+        "attach(obj,socket)",
+        "carry(obj,gripA,gripB)"
+      ],
+      "preview": [
+        "objects/previews/cast.png",
+        "objects/previews/turnaround.png",
+        "objects/previews/faces.png",
+        "objects/previews/acts.png"
+      ],
+      "selftest": "node objects/selftest.js",
+      "example_scene": "pipeline/scenes/char_demo.js"
+    },
+    {
+      "name": "shovel",
+      "tier": 2,
+      "file": "objects/shovel.js",
+      "factory": "makeShovel(opts)",
+      "size_m": {
+        "length": 1.05
+      },
+      "origin": "blade tip (ground contact), +y up the shaft",
+      "parts": [
+        "blade",
+        "shaft",
+        "grip"
+      ],
+      "grips": [
+        "A (top, D-handle)",
+        "B (mid shaft)"
+      ],
+      "use": "const sv = makeShovel(); sv.group.scale.setScalar(ch.K/1.65); ch.carry(sv.group, sv.grips.A, sv.grips.B);"
+    },
+    {
+      "name": "car",
+      "tier": 2,
+      "file": "objects/car.js",
+      "factory": "makeCar(opts) | crashPath(opts)",
+      "size_m": {
+        "width": 1.9,
+        "height": 1.35,
+        "length": 4.2
+      },
+      "origin": "ground contact at car centre, faces +z",
+      "colors": [
+        "red",
+        "yellow",
+        "blue",
+        "green",
+        "white",
+        "orange",
+        "purple"
+      ],
+      "api": [
+        "path(t=>({x,z,yaw,dist}))",
+        "crash(tHit)",
+        "update(t)"
+      ],
+      "use": "const car=makeCar({color:'red'}); car.path(t=>({x:1.7,z:-40+18*t,yaw:0,dist:18*t})); car.update(t);  // crashPath({target:[x,z],hit,lane,speed,veer,heading}).path = drive, veer into target, bounce, reverse away",
+      "preview": "objects/previews/car.png",
+      "example_scene": "pipeline/scenes/tree_road.js"
+    },
+    {
+      "name": "tree",
+      "tier": 2,
+      "file": "objects/tree.js",
+      "factory": "makeTree(opts)",
+      "styles": [
+        "round",
+        "autumn",
+        "tall"
+      ],
+      "size_m": {
+        "height": 3.9
+      },
+      "origin": "ground at trunk centre",
+      "trunkRadius": 0.22,
+      "api": [
+        "grow(fn|number)",
+        "hits(times,[dirX,dirZ])",
+        "update(t)"
+      ],
+      "use": "const tr=makeTree({style:'round'}); tr.grow(t=>0.2+0.8*backOut((t-1)/0.7)).hits([3.96],[0,1]); tr.update(t);",
+      "preview": "objects/previews/tree.png",
+      "example_scene": "pipeline/scenes/tree_road.js"
+    }
+  ],
+  "todo_tier3": [
+    "road",
+    "house",
+    "lamp post",
+    "telephone pole",
+    "bush",
+    "rock",
+    "cloud",
+    "bicycle",
+    "bench",
+    "chair",
+    "mailbox",
+    "dog",
+    "cat",
+    "bird",
+    "sign",
+    "table",
+    "backpack"
+  ]
+}
