@@ -1,9 +1,0 @@
-node_modules/
-.next/
-out/
-.renders/
-.env
-.env.local
-*.mp4
-*.webm
-*.mov
