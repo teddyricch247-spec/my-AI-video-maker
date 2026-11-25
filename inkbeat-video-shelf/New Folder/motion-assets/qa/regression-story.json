@@ -1,0 +1,4 @@
+[
+  {"id": "story/market-street", "v2scene": "market", "times": [0.4, 1.6, 2.8, 3.0, 4.0]},
+  {"id": "story/desert-dunes", "v2scene": "dunes", "times": [5.0]}
+]
