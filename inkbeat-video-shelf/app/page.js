@@ -56,9 +56,9 @@ export default async function Page({ searchParams }) {
   return (
     <main className="page">
       <header className="page-head">
-        <h1>Shorts shelf</h1>
+        <h1>Video shelf</h1>
         <p className="lede">
-          Session folders from your database. Open a folder to play parts in order, download clips, or delete them when done.
+          Two video styles — 3D Cartoon and 2D Paper Motion. Pick a mode, browse session folders, play parts in order, or download saved clips.
         </p>
       </header>
 

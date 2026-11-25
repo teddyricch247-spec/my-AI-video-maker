@@ -24,6 +24,10 @@ export function isWideName(name) {
   return /(^|[/_-])16x9([/_.-]|$)/i.test(String(name || ''));
 }
 
+export function isPaperStyle(name) {
+  return /(^|[/_-])(paper|2d)([/_.-]|$)/i.test(String(name || ''));
+}
+
 function extractFolderSlug(name) {
   const normalized = String(name || '').replace(/^\/+/, '');
   if (normalized.includes('/')) {
@@ -36,7 +40,8 @@ function extractFolderSlug(name) {
   while (true) {
     const next = stem
       .replace(/(?:[-_](?:part|pt)[-_]?\d+)$/i, '')
-      .replace(/(?:[-_]16x9)$/i, '');
+      .replace(/(?:[-_]16x9)$/i, '')
+      .replace(/(?:[-_](?:paper|2d))$/i, '');
     if (next === stem || !next) break;
     stem = next;
   }
@@ -61,6 +66,9 @@ export function parseVideoEntry(item) {
   const name = String(item?.name || '');
   const filename = name.split('/').pop() || name;
   const wide = isWideName(name);
+  const paper = isPaperStyle(name);
+  const style = paper ? 'paper' : '3d';
+  const styleLabel = paper ? '2D Paper' : '3D Cartoon';
   const aspect = wide ? '16:9' : '9:16';
   const folderSlug = extractFolderSlug(name);
   const folderTitle = titleFromSlug(folderSlug);
@@ -72,7 +80,10 @@ export function parseVideoEntry(item) {
   } else if (partOrder.length > 1) {
     partLabel = `Part ${partOrder.join('.')}`;
   } else if (name.includes('/')) {
-    const cleanStem = filename.replace(/\.[^.]+$/, '').replace(/(^|[-_])16x9(?=[-_]|$)/gi, '');
+    const cleanStem = filename
+      .replace(/\.[^.]+$/, '')
+      .replace(/(^|[-_])16x9(?=[-_]|$)/gi, '')
+      .replace(/(^|[-_])(paper|2d)(?=[-_]|$)/gi, '');
     partLabel = titleFromSlug(cleanStem) || 'Full clip';
   } else {
     partLabel = wide ? 'Landscape clip' : 'Full clip';
@@ -81,6 +92,7 @@ export function parseVideoEntry(item) {
   const title = filename
     .replace(/\.[^.]+$/, '')
     .replace(/(^|[-_])16x9(?=[-_]|$)/gi, '')
+    .replace(/(^|[-_])(paper|2d)(?=[-_]|$)/gi, '')
     .replace(/[-_]+/g, ' ')
     .trim();
 
@@ -94,6 +106,8 @@ export function parseVideoEntry(item) {
     folderTitle,
     wide,
     aspect,
+    style,
+    styleLabel,
     size: typeof item?.size === 'number' ? item.size : null,
     created: item?.created ?? null,
     src: item?.src ?? '',
@@ -140,6 +154,7 @@ export function groupVideosIntoFolders(rawVideos) {
         latestCreated: null,
         latestMs: 0,
         aspects: [],
+        styles: [],
       };
       map.set(video.folderSlug, folder);
     }
@@ -158,6 +173,9 @@ export function groupVideosIntoFolders(rawVideos) {
     if (!folder.aspects.includes(video.aspect)) {
       folder.aspects.push(video.aspect);
     }
+    if (video.style && !folder.styles.includes(video.style)) {
+      folder.styles.push(video.style);
+    }
   }
 
   const folders = Array.from(map.values()).map((folder) => {
@@ -170,6 +188,7 @@ export function groupVideosIntoFolders(rawVideos) {
       latestCreated: folder.latestCreated,
       latestMs: folder.latestMs,
       aspects: folder.aspects,
+      styles: folder.styles,
       videos: folder.videos,
     };
   });

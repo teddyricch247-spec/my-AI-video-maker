@@ -25,6 +25,7 @@ const MB = 1024 * 1024, LIMIT = 50 * MB, SHRINK_OVER = 45 * MB;
 const argv = process.argv.slice(2), dry = argv.includes('--dry-run');
 let folderArg = '';
 let sceneFileArg = '';
+let styleArg = '';
 const positional = [];
 for (let i = 0; i < argv.length; i++) {
   if (argv[i] === '--folder' && argv[i + 1]) {
@@ -35,12 +36,16 @@ for (let i = 0; i < argv.length; i++) {
     sceneFileArg = argv[++i];
   } else if (argv[i].startsWith('--scene-file=')) {
     sceneFileArg = argv[i].slice('--scene-file='.length);
+  } else if (argv[i] === '--style' && argv[i + 1]) {
+    styleArg = argv[++i].toLowerCase();
+  } else if (argv[i].startsWith('--style=')) {
+    styleArg = argv[i].slice('--style='.length).toLowerCase();
   } else if (!argv[i].startsWith('--')) {
     positional.push(argv[i]);
   }
 }
 const [input, wanted] = positional;
-if (!input) { console.error('Usage: node scripts/upload.mjs <video.mp4 | render-folder> [name] [--folder <session>] [--scene-file <path.js>] [--dry-run]'); process.exit(1); }
+if (!input) { console.error('Usage: node scripts/upload.mjs <video.mp4 | render-folder> [name] [--folder <session>] [--scene-file <path.js>] [--style 3d|paper] [--dry-run]'); process.exit(1); }
 if (!existsSync(input)) { console.error(`Not found: ${input}`); process.exit(1); }
 if (sceneFileArg && !existsSync(sceneFileArg)) { console.error(`Scene file not found: ${sceneFileArg}`); process.exit(1); }
 if (!dry && (!URL_BASE || !KEY)) { console.error('No Supabase URL or key. Check config/shelf.json.'); process.exit(1); }
@@ -65,10 +70,12 @@ const dims = (f) => {
   return w && h ? { w, h } : null;
 };
 const d0 = dims(files[0]);
+const isPaperStyle = styleArg === 'paper' || styleArg === '2d' || styleArg === 'mode2';
+const styleTag = isPaperStyle && !/(^|[-_])(paper|2d)([-_]|$)/.test(stem) && !/(^|[-_])(paper|2d)([-_]|$)/.test(folderPrefix) ? '-paper' : '';
 const tag = d0 && d0.w > d0.h && !/16x9/.test(stem) ? '-16x9' : '';
 const type = { '.mp4': 'video/mp4', '.webm': 'video/webm', '.mov': 'video/quicktime' };
 const nameOf = (f, i) => {
-  const fileName = `${stem}${tag}${files.length > 1 ? `-part-${String(i + 1).padStart(2, '0')}` : ''}${(extname(f) || '.mp4').toLowerCase()}`;
+  const fileName = `${stem}${styleTag}${tag}${files.length > 1 ? `-part-${String(i + 1).padStart(2, '0')}` : ''}${(extname(f) || '.mp4').toLowerCase()}`;
   return folderPrefix ? `${folderPrefix}/${fileName}` : fileName;
 };
 

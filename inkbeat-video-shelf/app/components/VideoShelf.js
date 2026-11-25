@@ -4,6 +4,23 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { groupVideosIntoFolders } from '../../lib/folders';
 
+const VIDEO_MODES = [
+  {
+    id: '3d',
+    label: 'Mode 1 · 3D Cartoon',
+    skill: 'skill/inkbeat-shorts',
+    summary: 'Toon-shaded 3D scenes, inverted-hull ink outlines, rigged characters & moving camera beats.',
+    promptPrefix: 'Make a 9:16 video in Mode 1 (inkbeat-shorts — 3D Cartoon) from this transcript:',
+  },
+  {
+    id: 'paper',
+    label: 'Mode 2 · 2D Paper Motion',
+    skill: 'skill/inkbeat-paper',
+    summary: 'Warm flat-pastel 2D cutouts, 122 modular scenes & characters, 2D pan/zoom beats & live whiteboards.',
+    promptPrefix: 'Make a 9:16 video in Mode 2 (inkbeat-paper — 2D Paper Motion) from this transcript:',
+  },
+];
+
 function megabytes(bytes) {
   return bytes ? `${(bytes / 1048576).toFixed(1)} MB` : '';
 }
@@ -56,6 +73,7 @@ function VideoCard({ video, folderTitle, showFolderName, onDeleted, onError }) {
 
   const metaParts = [
     showFolderName ? folderTitle : null,
+    video.styleLabel,
     video.wide ? '16:9' : null,
     megabytes(video.size),
     day(video.created),
@@ -122,17 +140,29 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
   const [videos, setVideos] = useState(initialVideos || []);
   const [activeFolderSlug, setActiveFolderSlug] = useState(initialFolderSlug);
   const [viewMode, setViewMode] = useState('folders'); // 'folders' | 'all'
+  const [styleFilter, setStyleFilter] = useState('all'); // 'all' | '3d' | 'paper'
+  const [copiedMode, setCopiedMode] = useState(null);
   const [query, setQuery] = useState('');
   const [confirmDeleteFolder, setConfirmDeleteFolder] = useState(false);
   const [deletingFolder, setDeletingFolder] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const folders = useMemo(() => groupVideosIntoFolders(videos), [videos]);
+  const styleScopedVideos = useMemo(() => {
+    if (styleFilter === 'all') return videos;
+    return videos.filter((v) => (v.style || '3d') === styleFilter);
+  }, [videos, styleFilter]);
 
-  const activeFolder = useMemo(
-    () => (activeFolderSlug ? folders.find((f) => f.slug === activeFolderSlug) || null : null),
-    [folders, activeFolderSlug]
-  );
+  const allFolders = useMemo(() => groupVideosIntoFolders(videos), [videos]);
+  const folders = useMemo(() => groupVideosIntoFolders(styleScopedVideos), [styleScopedVideos]);
+
+  const activeFolder = useMemo(() => {
+    if (!activeFolderSlug) return null;
+    return (
+      folders.find((f) => f.slug === activeFolderSlug) ||
+      allFolders.find((f) => f.slug === activeFolderSlug) ||
+      null
+    );
+  }, [folders, allFolders, activeFolderSlug]);
 
   const filteredFolders = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -147,18 +177,18 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
 
   const filteredVideos = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return videos;
-    return videos.filter(
+    if (!q) return styleScopedVideos;
+    return styleScopedVideos.filter(
       (v) =>
         v.folderTitle.toLowerCase().includes(q) ||
         v.filename.toLowerCase().includes(q) ||
         v.partLabel.toLowerCase().includes(q)
     );
-  }, [videos, query]);
+  }, [styleScopedVideos, query]);
 
   const totalBytes = useMemo(
-    () => videos.reduce((sum, v) => sum + (typeof v.size === 'number' ? v.size : 0), 0),
-    [videos]
+    () => styleScopedVideos.reduce((sum, v) => sum + (typeof v.size === 'number' ? v.size : 0), 0),
+    [styleScopedVideos]
   );
 
   function syncFolderUrl(slug) {
@@ -185,6 +215,47 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
     setConfirmDeleteFolder(false);
     setActiveFolderSlug(null);
     syncFolderUrl(null);
+  }
+
+  async function handleCopyPrompt(mode) {
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(mode.promptPrefix);
+        copied = true;
+      }
+    } catch {
+      copied = false;
+    }
+    if (!copied && typeof document !== 'undefined') {
+      try {
+        const ta = document.createElement('textarea');
+        ta.value = mode.promptPrefix;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        ta.style.pointerEvents = 'none';
+        document.body.appendChild(ta);
+        ta.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch {
+        copied = false;
+      }
+    }
+    if (copied) {
+      setErrorMsg('');
+      setCopiedMode(mode.id);
+      setTimeout(() => {
+        setCopiedMode((cur) => (cur === mode.id ? null : cur));
+      }, 2200);
+    } else {
+      setErrorMsg(`Copy unavailable automatically — use: ${mode.promptPrefix}`);
+    }
+  }
+
+  function toggleStyleCard(id) {
+    setStyleFilter((prev) => (prev === id ? 'all' : id));
   }
 
   function handleVideosDeleted(deletedNames) {
@@ -232,23 +303,52 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
     }
   }
 
-  if (videos.length === 0) {
-    return (
-      <section className="notice empty" aria-live="polite">
-        <h2>No saved videos yet</h2>
-        <p>Ask the agent to render and save a video to the database. Session folders will appear here automatically.</p>
-      </section>
-    );
-  }
-
   return (
     <div className="shelf-wrap">
       {!activeFolder && (
+        <section className="mode-deck" aria-label="Video style modes">
+          {VIDEO_MODES.map((m) => {
+            const isSelected = styleFilter === m.id;
+            const count = videos.filter((v) => (v.style || '3d') === m.id).length;
+            return (
+              <article
+                key={m.id}
+                className={isSelected ? 'mode-card active' : 'mode-card'}
+              >
+                <div className="mode-card-head">
+                  <h2>{m.label}</h2>
+                  <span className="meta nums">{count === 1 ? '1 clip' : `${count} clips`}</span>
+                </div>
+                <p className="mode-desc">{m.summary}</p>
+                <div className="mode-actions">
+                  <button
+                    type="button"
+                    className={isSelected ? 'mode-btn selected' : 'mode-btn'}
+                    aria-pressed={isSelected}
+                    onClick={() => toggleStyleCard(m.id)}
+                  >
+                    {isSelected ? 'Showing style' : `Filter ${m.id === '3d' ? '3D' : '2D'}`}
+                  </button>
+                  <button
+                    type="button"
+                    className="mode-btn ghost"
+                    onClick={() => handleCopyPrompt(m)}
+                  >
+                    {copiedMode === m.id ? 'Copied prompt' : 'Copy prompt'}
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+      )}
+
+      {!activeFolder && videos.length > 0 && (
         <div className="toolbar">
           <div className="toolbar-summary nums">
             <span>{folders.length === 1 ? '1 folder' : `${folders.length} folders`}</span>
             <span aria-hidden="true">·</span>
-            <span>{videos.length === 1 ? '1 video' : `${videos.length} videos`}</span>
+            <span>{styleScopedVideos.length === 1 ? '1 video' : `${styleScopedVideos.length} videos`}</span>
             {totalBytes > 0 && (
               <>
                 <span aria-hidden="true">·</span>
@@ -268,6 +368,25 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
                 aria-label="Search sessions"
               />
             </label>
+
+            <div className="view-switch three" role="tablist" aria-label="Style filter">
+              {[
+                { id: 'all', label: 'All' },
+                { id: '3d', label: '3D' },
+                { id: 'paper', label: '2D Paper' },
+              ].map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={styleFilter === s.id}
+                  className={styleFilter === s.id ? 'switch-btn active' : 'switch-btn'}
+                  onClick={() => setStyleFilter(s.id)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
 
             <div className="view-switch" role="tablist" aria-label="Shelf view">
               <button
@@ -299,7 +418,14 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
         </div>
       )}
 
-      {activeFolder ? (
+      {videos.length === 0 ? (
+        <section className="notice empty" aria-live="polite">
+          <h2>No saved videos yet</h2>
+          <p>
+            Pick Mode 1 (3D Cartoon) or Mode 2 (2D Paper Motion) above and ask the agent to render a draft, then say save when ready.
+          </p>
+        </section>
+      ) : activeFolder ? (
         <section className="folder-view" aria-labelledby="folder-heading">
           <div className="folder-bar">
             <button type="button" className="back-btn" onClick={closeFolder}>
@@ -345,6 +471,7 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
             <h2 id="folder-heading">{activeFolder.title}</h2>
             <p className="meta nums">
               {[
+                activeFolder.styles?.map((s) => (s === 'paper' ? '2D Paper' : '3D Cartoon')).join(' + '),
                 activeFolder.clipCount === 1 ? '1 part' : `${activeFolder.clipCount} parts`,
                 activeFolder.aspects.join(' / '),
                 megabytes(activeFolder.totalBytes),
@@ -368,6 +495,18 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
             ))}
           </ul>
         </section>
+      ) : styleScopedVideos.length === 0 ? (
+        <section className="notice empty">
+          <h2>No {styleFilter === 'paper' ? '2D Paper' : '3D Cartoon'} clips saved yet</h2>
+          <p>
+            Copy the prompt prefix from the {styleFilter === 'paper' ? 'Mode 2' : 'Mode 1'} card above to render in this style, or show all saved clips.
+          </p>
+          <p style={{ marginTop: '0.85rem' }}>
+            <button type="button" className="back-btn" onClick={() => setStyleFilter('all')}>
+              Show all styles
+            </button>
+          </p>
+        </section>
       ) : viewMode === 'folders' ? (
         filteredFolders.length === 0 ? (
           <section className="notice empty">
@@ -386,6 +525,7 @@ export default function VideoShelf({ initialVideos, initialFolderSlug = null }) 
                     <h2>{folder.title}</h2>
                     <p className="meta nums">
                       {[
+                        folder.styles?.map((s) => (s === 'paper' ? '2D Paper' : '3D')).join(' + '),
                         folder.aspects.join(' / '),
                         megabytes(folder.totalBytes),
                         day(folder.latestCreated),

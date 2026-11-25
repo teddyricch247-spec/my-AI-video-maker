@@ -49,8 +49,9 @@ export function idled(id, draw, getMeta) {
     }
     if (kind === 'bob') { g.save(); g.translate(0, Math.sin(t * 22 + ph) * .45 + Math.sin(t * 9 + ph) * .25); draw(g, t, p); g.restore(); return }
     // layered kinds: draw into a core layer under the caller's transform, tint only painted pixels, composite
-    const Lr = getLayer('idle:' + kind, 1280, 720), lg = Lr.g, tr = g.getTransform();
-    lg.setTransform(1, 0, 0, 1, 0, 0); lg.globalAlpha = 1; lg.globalCompositeOperation = 'source-over'; lg.clearRect(0, 0, 1280, 720);
+    const cw = (g.canvas && g.canvas.width) || 1280, ch = (g.canvas && g.canvas.height) || 720;
+    const Lr = getLayer('idle:' + kind, cw, ch), lg = Lr.g, tr = g.getTransform();
+    lg.setTransform(1, 0, 0, 1, 0, 0); lg.globalAlpha = 1; lg.globalCompositeOperation = 'source-over'; lg.clearRect(0, 0, cw, ch);
     lg.setTransform(tr); draw(lg, t, p);
     const b = m.bounds, cx = ax + (b[0] + b[2] / 2 - ox) * s, cy = ay + (b[1] + b[3] / 2 - oy) * s, hw = b[2] * s / 2, hh = b[3] * s / 2;
     lg.save(); lg.globalCompositeOperation = 'source-atop';

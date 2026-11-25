@@ -76,3 +76,29 @@ test('isSafeVideoPath accepts valid video paths and rejects traversal or non-vid
   assert.equal(isSafeVideoPath('warehouse-part1.txt'), false);
   assert.equal(isSafeVideoPath(''), false);
 });
+
+test('parseVideoEntry detects Mode 2 paper style and strips -paper/-2d tags from session slugs', () => {
+  const p1 = parseVideoEntry({ name: 'office-plan-paper-part-01.mp4', size: 1200, created: '2026-11-25T12:00:00Z' });
+  const p2 = parseVideoEntry({ name: 'office-plan-paper-16x9-part-02.mp4', size: 1400, created: '2026-11-25T12:01:00Z' });
+  const p3 = parseVideoEntry({ name: 'warehouse-part1.mp4', size: 1000, created: '2026-11-24T12:00:00Z' });
+
+  assert.equal(p1.style, 'paper');
+  assert.equal(p1.styleLabel, '2D Paper');
+  assert.equal(p1.folderSlug, 'office-plan');
+  assert.equal(p1.partLabel, 'Part 1');
+  assert.equal(p1.wide, false);
+
+  assert.equal(p2.style, 'paper');
+  assert.equal(p2.wide, true);
+  assert.equal(p2.aspect, '16:9');
+  assert.equal(p2.folderSlug, 'office-plan');
+  assert.equal(p2.partLabel, 'Part 2');
+
+  assert.equal(p3.style, '3d');
+  assert.equal(p3.styleLabel, '3D Cartoon');
+
+  const folders = groupVideosIntoFolders([p1, p2, p3]);
+  assert.deepEqual(folders[0].styles, ['paper']);
+  assert.deepEqual(folders[1].styles, ['3d']);
+});
+

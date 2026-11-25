@@ -1,17 +1,20 @@
 # Inkbeat video shelf
 
-A phone-friendly website that lists the 3D cartoon videos an AI agent has made, in 9:16 (Shorts) and 16:9 (YouTube). Tap a clip to play it, tap Download to save it.
+A phone-friendly website that lists videos an AI agent has made in **two selectable styles**, in both **9:16 (Shorts)** and **16:9 (YouTube)**:
 
-The agent (Google AI Studio) makes the videos in its own sandbox using the **inkbeat-shorts** skill, which is bundled in `skill/`. AI Studio can't load Claude skills natively, so `AGENTS.md` tells the agent where the skill is and how to use it.
+- **Mode 1 (`skill/inkbeat-shorts`) — 3D Cartoon:** toon-shaded Three.js worlds, inverted-hull ink outlines, rigged 3D characters, and moving 3D camera beats.
+- **Mode 2 (`skill/inkbeat-paper`) — 2D Paper Motion:** warm flat-pastel 2D Canvas cutouts powered by 122 modular assets (12 rigged characters, 37 gestures, 17 props, 7 sky moods, interiors & live whiteboards, 10 vehicles, weather FX, 9 story scenes).
+
+Tap a mode card to filter clips or copy a prompt starter, open any folder to play parts in order, and Download or Delete clips directly from your phone.
 
 ## How it works
 
-1. You send the agent a **transcript with a timestamp on every word** (`0.112 - 0.176  If`) plus **reference photos** and/or a prompt. Say YouTube / 16:9 for long form; otherwise you get a 9:16 Short.
-2. It reads `AGENTS.md` and the skill, writes a temporary scene in `/tmp/inkbeat-work/` and **renders a draft in `/tmp/inkbeat-renders/`**. Nothing is written into the codebase or saved to Supabase yet, and it makes **no voice-over**: you record that in your own editor.
-3. 9:16 gets big 1-2 word captions on each word. 16:9 gets small full-sentence captions with only the spoken word highlighted.
+1. You send the agent a **transcript with a timestamp on every word** (`0.112 - 0.176  If`) plus **reference photos** and/or a prompt—and pick **Mode 1 (3D Cartoon)** or **Mode 2 (2D Paper Motion)**. Say YouTube / 16:9 for long form; otherwise you get a 9:16 Short.
+2. It reads `AGENTS.md` and the chosen skill (`inkbeat-shorts` or `inkbeat-paper`), writes a temporary scene in `/tmp/inkbeat-work/`, and **renders a draft in `/tmp/inkbeat-renders/`**. Nothing is written into the codebase or saved to Supabase yet, and it makes **no voice-over or music**.
+3. 9:16 gets big 1–2 word captions on each word. 16:9 gets small full-sentence captions with only the spoken word highlighted.
 4. A video longer than 30 seconds comes out as several parts (`part-01.mp4`, `part-02.mp4` ...), cut on pauses, that join seamlessly in your editor.
-5. When you say **save**, the agent uploads the rendered MP4s to the `videos` bucket and the generated scene `.js` code to the `scenes` bucket on Supabase (a file over 45 MB is re-encoded first so it stays under the 50 MB limit), then clears `/tmp`. 16:9 files are named `...-16x9...` so this site shows them landscape.
-6. This site lists whatever is in the `videos` bucket, grouped automatically into session folders. Each clip has **Download** and **Delete** buttons so you can save what you want and clean up the rest directly from the shelf.
+5. When you say **save**, the agent uploads the rendered MP4s to the `videos` bucket and the generated scene `.js` code to the `scenes` bucket on Supabase (files over 45 MB are re-encoded first; Mode 2 clips get `-paper` and 16:9 clips get `-16x9`), then clears `/tmp`.
+6. This site lists whatever is in the `videos` bucket, grouped automatically into session folders and filterable by **3D** vs **2D Paper**.
 
 Your phone never renders anything, and the codebase stays light.
 
@@ -20,10 +23,11 @@ Your phone never renders anything, and the codebase stays light.
 ```
 AGENTS.md              rules for the AI agent (read this first)
 README.md              this file
-skill/inkbeat-shorts/  the core skill & built-in reference scenes only
-app/                   the website (Next.js, folders + Download/Delete)
+skill/inkbeat-shorts/  Mode 1: 3D Cartoon skill & built-in reference scenes
+skill/inkbeat-paper/   Mode 2: 2D Paper Motion skill (122 assets + offline pipeline)
+app/                   the website (Next.js, 2-mode deck + style filter + folders)
 lib/supabase.js        reads/deletes from Supabase storage (server only)
-lib/folders.js         groups saved session parts into folders
+lib/folders.js         groups saved session parts & parses 3D vs 2D Paper tags
 config/shelf.json      the Supabase URL, publishable key and bucket names
 supabase/setup.sql     SQL for the `videos` and `scenes` buckets and policies
 scripts/               bucket check, upload, list, delete, and scenes sync
@@ -46,27 +50,28 @@ Run the site: `npm install`, then `npm run dev` (port 3000). `npm run bucket` ch
 ## First message to send in AI Studio
 
 ```
-Read AGENTS.md and skill/inkbeat-shorts/START_HERE.md first and follow them for every video task.
-Then run the one-time setup from AGENTS.md (npm install and npm i -D playwright-core at the repo root, then python3 pipeline/doctor.py from skill/inkbeat-shorts).
-Show me the doctor output. Then, from skill/inkbeat-shorts, render a 3-second test: python3 pipeline/make_video.py --scene beats_test --seconds 3 --mode draft --out /tmp/inkbeat-renders/test --no-qa
-and tell me whether /tmp/inkbeat-renders/test/video.mp4 exists and the seconds per frame. Then render the same 3 seconds with --aspect 16:9 into /tmp/inkbeat-renders/test169 and tell me the same.
+Read AGENTS.md first and follow the matching skill (Mode 1: skill/inkbeat-shorts, Mode 2: skill/inkbeat-paper).
+Run python3 skill/inkbeat-shorts/pipeline/doctor.py and python3 skill/inkbeat-paper/pipeline/doctor.py.
+Show me both doctor outputs, then render a 3-second test in Mode 2:
+python3 skill/inkbeat-paper/pipeline/make_video.py --scene paper_test --seconds 3 --mode draft --out /tmp/inkbeat-renders/test2d --no-qa
+and tell me whether /tmp/inkbeat-renders/test2d/video.mp4 exists and the seconds per frame.
 ```
 
 Also paste this line into AI Studio's system instructions so it never forgets:
 
 ```
-Read AGENTS.md and skill/inkbeat-shorts/START_HERE.md before any video task.
+Read AGENTS.md and the chosen skill's START_HERE.md (inkbeat-shorts for Mode 1, inkbeat-paper for Mode 2) before any video task.
 ```
 
 ## Things to ask the agent
 
-- Send the transcript and photos: "Make a 9:16 Short from this transcript and these photos." It renders a draft in `/tmp` and tells you how it looks. Nothing is saved yet.
+- "Make a 9:16 video in Mode 2 (2D Paper Motion) from this transcript..."
+- "Make a 9:16 Short in Mode 1 (3D Cartoon) from this transcript and these photos."
 - "Same video for YouTube, 16:9." (small sentence captions, calm cuts)
 - "Render it final." (higher quality, slower)
-- "Save it." (uploads all parts to the `videos` bucket and the scene code to `scenes`, then replies with Watch links)
-- "Render the tree_road scene as a 15 second draft."
-- "What's on the shelf?"
-- Or tap **Delete** right on any clip or folder in the website UI.
+- "Save it." (uploads all parts to `videos` with `-paper` for Mode 2, and scene code to `scenes`, then replies with Watch links)
+- "Render the office_demo scene in Mode 2 as a 9 second draft."
+- "What's on the shelf?" or tap **Delete** right on any clip or folder in the website UI.
 
 ## Limits
 
